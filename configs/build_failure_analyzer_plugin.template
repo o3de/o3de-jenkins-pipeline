@@ -1,0 +1,19 @@
+# Config for Build Failure Analyzer plugin
+# Example: Setup using MongoDB
+unclassified:
+  buildFailureAnalyzer:
+    gerritTriggerEnabled: true
+    globalEnabled: true
+    knowledgeBase:
+    mongoDB:
+      dbName: "<db-name>"
+      enableStatistics: true
+      host: "<endpoint>"
+      password: "{<password-credential-name>}"
+      port: 27017
+      successfulLogging: false
+      userName: "<username>"
+    maxLogSize: 0
+    noCausesEnabled: true
+    noCausesMessage: "<message>"
+    nrOfScanThreads: 3

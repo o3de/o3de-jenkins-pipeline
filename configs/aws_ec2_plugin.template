@@ -1,0 +1,42 @@
+# Config for AWS EC2 plugin
+# AWS Clouds are configured by region. Add a new '- amazonEC2' entry under clouds to add new regions.
+# Add a new '- ami' entry under templates to add new build node configs. 
+jenkins:
+  clouds:
+  - amazonEC2:
+      # Example: cloud setup in us-west-2
+      cloudName: "<name>"
+      instanceCapStr: "100"  # A cap can also be set for each AMI config.
+      region: "us-west-2"
+      sshKeysCredentialsId: "<credential-id>"  # Use the ssh credential ID created in credentials.yaml
+      templates:
+      # Example: Linux build node using SSH in us-west-2a
+      - ami: "${LINUX_AMI_ID}"
+        amiType:
+          unixData:
+            sshPort: "22"
+        connectionStrategy: PRIVATE_IP
+        description: "<description>"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: "<instance-profile-arn>"
+        idleTerminationMinutes: "30"
+        labelString: "linux"
+        launchTimeoutStr: "300"
+        maxTotalUses: 1
+        minimumNumberOfInstances: 0
+        minimumNumberOfSpareInstances: 0
+        numExecutors: 1
+        remoteAdmin: "<username>"
+        remoteFS: "<remote-home-directory>"
+        securityGroups: "${SECURITY_GROUP_ID}"
+        stopOnTerminate: false
+        subnetId: "<subnet-id>"
+        tags:
+        - name: "Name"
+          value: "<name-tag>"
+        tenancy: Default
+        type: <instance-type>  # e.g. C54xlarge
+        useEphemeralDevices: false
+        zone: "us-west-2a"
