@@ -1,0 +1,18 @@
+# Config for Project-based Matrix Authorization Strategy
+# Use this file to grant additional permissions
+# Replace <value> with the required parameters
+# Default admin role granted in jenkins.yaml
+jenkins:
+  authorizationStrategy:
+    projectMatrix:
+      permissions:
+      # Example: grant permissions to run/cancel builds
+      - "Job/Build:<user/group>"
+      - "Job/Cancel:<user/group>"
+      - "Job/Read:<user/group>"
+      - "Overall/Read:<user/group>"
+      - "View/Read:<user/group>"
+      # Example: grant additional admin permissions
+      - "Overall/Administer::<user/group>"
+      # Example: grant public read access
+      - "Overall/Read:anonymous"

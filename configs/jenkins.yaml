@@ -1,0 +1,41 @@
+jenkins:
+  numExecutors: 6  # Jenkins pipeline runs some pre/post-build pipeline tasks on the controller. Increased from default (2) to prevent long queues.
+  securityRealm:
+    github:
+      githubWebUri: "https://github.com"
+      githubApiUri: "https://api.github.com"
+      clientID: "${GITHUB_ID}"
+      clientSecret: "${GITHUB_SECRET}"
+      oauthScopes: "read:org,user:email"
+  authorizationStrategy:
+    projectMatrix:
+      permissions:
+      - "Overall/Administer:${ADMIN_ROLE}"  # User/group assigned as admin. For additional permissions see matrix_authorization.template
+  remotingSecurity:
+    enabled: true
+unclassified:
+  location:
+    url: ${JENKINS_URL}
+    adminAddress: "${JENKINS_EMAIL_ADDRESS}"
+  gitHubConfiguration:
+    apiRateLimitChecker: ThrottleOnOver
+  email-ext:
+    defaultBody: |-
+      $PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS:
+
+      Check console output at $BUILD_URL to view the results.
+    defaultContentType: "text/plain"
+    defaultSubject: "$PROJECT_NAME - Build # $BUILD_NUMBER - $BUILD_STATUS!"
+    defaultTriggerIds:
+    - "hudson.plugins.emailext.plugins.trigger.FailureTrigger"
+    mailAccount:
+      smtpHost: "${SMTP_HOST}"
+      smtpPassword: "${SMTP_PASSWORD}"
+      smtpUsername: "${SMTP_USERNAME}"
+      useTls: true
+security:
+  scriptApproval:
+    approvedSignatures:
+    - "field hudson.plugins.git.GitSCM GIT_COMMIT"
+    - "method org.jenkinsci.plugins.workflow.steps.FlowInterruptedException getCauses"
+    - "new java.net.URL java.lang.String java.lang.String int java.lang.String"
