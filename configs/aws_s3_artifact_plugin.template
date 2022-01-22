@@ -2,7 +2,7 @@
 # Replace <value> with the required parameters
 aws:
   awsCredentials:
-    region: "<region>>"
+    region: "<region>"
   s3:
     container: "<s3-bucket-name>"
 unclassified:
