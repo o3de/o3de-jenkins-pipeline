@@ -1,5 +1,6 @@
 # Config for Project-based Matrix Authorization Strategy
 # Use this file to grant additional permissions
+# Replace <value> with the required parameters
 # Default admin role granted in jenkins.yaml
 jenkins:
   authorizationStrategy:

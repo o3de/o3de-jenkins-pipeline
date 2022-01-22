@@ -1,5 +1,6 @@
 # Config for Build Failure Analyzer plugin
-# See: https://plugins.jenkins.io/build-failure-analyzer/ 
+# See: https://plugins.jenkins.io/build-failure-analyzer/
+# Replace <value> with the required parameters
 # Example: Setup using MongoDB
 unclassified:
   buildFailureAnalyzer:

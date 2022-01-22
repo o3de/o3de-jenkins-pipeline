@@ -1,4 +1,5 @@
 # Config for AWS S3 artifact storage plugin
+# Replace <value> with the required parameters
 aws:
   awsCredentials:
     region: "<region>>"

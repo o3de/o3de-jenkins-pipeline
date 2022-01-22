@@ -1,5 +1,6 @@
 # Config for AWS EC2 plugin
 # AWS Clouds are configured by region. Add a new '- amazonEC2' entry under clouds to add new regions.
+# Replace <value> with the required parameters
 # Add a new '- ami' entry under templates to add new build node configs. 
 jenkins:
   clouds:

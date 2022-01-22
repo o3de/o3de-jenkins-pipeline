@@ -1,5 +1,6 @@
 # Config for Jenkins global environment variables
 # Add a new key/value pair under env to add new entries
+# Replace <value> with the required parameters
 jenkins:
   globalNodeProperties:
     - envVars:
