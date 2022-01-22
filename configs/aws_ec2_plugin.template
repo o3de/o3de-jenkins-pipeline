@@ -5,13 +5,13 @@
 jenkins:
   clouds:
   - amazonEC2:
-      # Example: cloud setup in us-west-2
+      # Example: cloud setup in ${AWS_REGION}
       cloudName: "<name>"
       instanceCapStr: "100"  # A cap can also be set for each AMI config.
-      region: "us-west-2"
+      region: "${AWS_REGION}"
       sshKeysCredentialsId: "<credential-id>"  # Use the ssh credential ID created in credentials.yaml
       templates:
-      # Example: Linux build node using SSH in us-west-2a
+      # Example: Linux build node using SSH in ${AWS_REGION}${AWS_AZ}
       - ami: "${LINUX_AMI_ID}"
         amiType:
           unixData:
@@ -40,4 +40,4 @@ jenkins:
         tenancy: Default
         type: <instance-type>  # e.g. C54xlarge
         useEphemeralDevices: false
-        zone: "us-west-2a"
+        zone: "${AWS_REGION}${AWS_AZ}"
