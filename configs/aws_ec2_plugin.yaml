@@ -1,0 +1,153 @@
+# Config for AWS EC2 plugin
+jenkins:
+  clouds:
+  - amazonEC2:
+      cloudName: ${/jenkins/config/aws_region}
+      instanceCapStr: "100"
+      region: ${/jenkins/config/aws_region}
+      sshKeysCredentialsId: "build_node_credentials" 
+      templates:
+      - description: "WIN2019_INC_4" 
+        ami: "ami-0b6a8649a4a28adb2"
+        amiType:
+          unixData:
+            sshPort: "22"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: ${/jenkins/config/instanceprofile}
+        labelString: "windows-a4a28adb2"
+        launchTimeoutStr: "600"
+        maxTotalUses: 1
+        numExecutors: 1
+        remoteAdmin: ${/jenkins/config/buildnode/username}
+        remoteFS: "c:/ly"
+        securityGroups: ${/jenkins/config/buildnode/securitygroup}
+        subnetId: "subnet-0c203f0579b4bc4a0"
+        tags:
+        - name: "Name"
+          value: "WIN2019_INC_4"
+        tmpDir: "$(cygpath -w /cygdrive/c/ly)"
+        type: C54xlarge
+        zone: "${/jenkins/config/aws_region}a"
+      - description: "UBUNTU20_BLD_2"
+        ami: "ami-021edaa5d4d476bdf"
+        amiType:
+          unixData:
+            sshPort: "22"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: ${/jenkins/config/instanceprofile}
+        labelString: "linux-707531fc7"
+        launchTimeoutStr: "300"
+        maxTotalUses: 1
+        nodeProperties:
+        - envVars:
+            env:
+            - key: "DISPLAY"
+              value: ":0"
+        numExecutors: 1
+        remoteAdmin: ${/jenkins/config/buildnode/username}
+        remoteFS: "/home/lybuilder/ly"
+        securityGroups: ${/jenkins/config/buildnode/securitygroup}
+        subnetId: "subnet-c111be8b"
+        tags:
+        - name: "Name"
+          value: "UBUNTU20_BLD_2"
+        type: C44xlarge
+        userData: "#!/bin/bash\nsed -i /etc/hosts -e \"s/^127.0.0.1 localhost$/127.0.0.1\
+          \ localhost $(hostname)/\" \necho 'export ENV_3RDPARTY_PATH=/home/lybuilder/ly/workspace/3rdParty'\
+          \ >> /etc/profile.d/jenkins_config.sh\necho 'export TMPDIR=/tmp' >> /etc/profile.d/jenkins_config.sh\n\
+          systemctl start filebeat"
+        zone: "${/jenkins/config/aws_region}a"
+      - description: "MARS_PUBLISH_1"
+        ami: "ami-07e0caede54ba0c81"
+        amiType:
+          unixData:
+            sshPort: "22"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: ${/jenkins/config/instanceprofile}
+        instanceCapStr: "1"
+        labelString: "metrics"
+        launchTimeoutStr: "300"
+        maxTotalUses: -1
+        numExecutors: 1
+        remoteAdmin: ${/jenkins/config/buildnode/username}
+        remoteFS: "/home/lybuilder/ly"
+        securityGroups: ${/jenkins/config/buildnode/securitygroup}
+        stopOnTerminate: true
+        subnetId: "subnet-c111be8b"
+        tags:
+        - name: "Name"
+          value: "MARS_PUBLISH_1"
+        type: C5aLarge
+        userData: |-
+          #!/bin/bash
+          sudo systemctl enable filebeat-prod filebeat-sandbox
+          sudo systemctl start filebeat-prod filebeat-sandbox
+        zone: "${/jenkins/config/aws_region}a"
+      - description: "Signing_WIN2019_INC_3"
+        ami: "ami-02d746f46333a5b9b"
+        amiType:
+          unixData:
+            sshPort: "22"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: ${/jenkins/config/instanceprofile}
+        labelString: "windows-packaging"
+        launchTimeoutStr: "600"
+        maxTotalUses: -1
+        numExecutors: 1
+        remoteAdmin: ${/jenkins/config/buildnode/username}
+        remoteFS: "c:/ly"
+        securityGroups: "sg-02861eb82b97b4d53, sg-0f8806ae5fa713ccb"
+        subnetId: "subnet-04f016990a8d061d6"
+        tags:
+        - name: "Name"
+          value: "Signing_WIN2019_INC_3"
+        tmpDir: "$(cygpath -w /cygdrive/c/ly)"
+        type: C5a4xlarge
+        zone: "${/jenkins/config/aws_region}a"
+      - description: "Signing_UBUNTU20_BLD_2"
+        ami: "ami-021edaa5d4d476bdf"
+        amiType:
+          unixData:
+            sshPort: "22"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: ${/jenkins/config/instanceprofile}
+        labelString: "linux-707531fc7-packaging"
+        launchTimeoutStr: "300"
+        maxTotalUses: 1
+        numExecutors: 1
+        remoteAdmin: ${/jenkins/config/buildnode/username}
+        remoteFS: "/home/lybuilder/ly"
+        securityGroups: ${/jenkins/config/buildnode/securitygroup}
+        subnetId: "subnet-c111be8b"
+        tags:
+        - name: "Name"
+          value: "Signing_UBUNTU20_BLD_2"
+        type: C5a4xlarge
+        userData: "#!/bin/bash\nsed -i /etc/hosts -e \"s/^127.0.0.1 localhost$/127.0.0.1\
+          \ localhost $(hostname)/\" \necho 'export ENV_3RDPARTY_PATH=/home/lybuilder/ly/workspace/3rdParty'\
+          \ >> /etc/profile.d/jenkins_config.sh\necho 'export TMPDIR=/tmp' >> /etc/profile.d/jenkins_config.sh\n\
+          echo 'export GPG_TTY=$(tty)' >> /etc/profile.d/jenkins_config.sh\nsystemctl\
+          \ start filebeat\n\nrm -v /etc/apt/apt.conf.d/70debconf\napt-get install\
+          \ -y dpkg-sig keychain\n\nsu - lybuilder bash -c ` \\\nexport GNUPGHOME=/home/lybuilder/.gnupg;\n\
+          pass=$(aws secretsmanager get-secret-value --secret-id jenkins-github/gpg/o3de-release-private.key\
+          \ --query SecretString --output text);\naws s3 cp s3://o3de-signing-keys/linux/o3de-releases-signing.key\
+          \ - | gpg --pinentry-mode loopback --passphrase $pass --import;\nchown -R\
+          \ lybuilder $GNUPGHOME;\nfpr=$(gpg --no-tty --list-keys --with-colons  |\
+          \ awk -F: '/fpr:/ {print $10; exit}');\necho -e '5\\ny\\n' | gpg --no-tty\
+          \ --command-fd 0 --expert --edit-key $fpr trust;\n`\n\nmv /usr/bin/dpkg-sig\
+          \ /usr/bin/dpkg-sig-cmd\ntee -a  /usr/bin/dpkg-sig > /dev/null <<'EOT'\n\
+          #!/bin/bash\n\nset +x\npass=$(aws secretsmanager get-secret-value --secret-id\
+          \ jenkins-github/gpg/o3de-release-private.key --query SecretString --output\
+          \ text)\nexec /usr/bin/dpkg-sig-cmd -g \"--pinentry-mode loopback --passphrase\
+          \ $pass\" \"$@\"\nEOT\n\nchmod 755 /usr/bin/dpkg-sig"
+        zone: "${/jenkins/config/aws_region}a"
