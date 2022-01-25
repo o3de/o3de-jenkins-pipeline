@@ -1,0 +1,11 @@
+# Config for AWS S3 artifact storage plugin
+aws:
+  awsCredentials:
+    region: ${/jenkins/config/aws_region}
+  s3:
+    container: "o3de-jenkins-artifacts"
+unclassified:
+  artifactManager:
+    artifactManagerFactories:
+    - jclouds:
+        provider: "s3"
