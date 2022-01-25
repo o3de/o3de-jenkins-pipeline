@@ -4,7 +4,6 @@ jenkins:
   authorizationStrategy:
     projectMatrix:
       permissions:
-      # Permission to run/cancel AR pipeline
       # O3DE Maintainers
       - "Job/Build:o3de*maintainers"
       - "Job/Cancel:o3de*maintainers"
