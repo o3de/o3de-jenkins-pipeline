@@ -4,6 +4,7 @@ build-timeout:1.20
 build-failure-analyzer:2.1.0
 build-with-parameters:1.6
 configuration-as-code:1.54 
+configuration-as-code-secret-ssm:1.0.1
 description-setter:1.10
 ec2:1.66
 external-monitor-job:1.7

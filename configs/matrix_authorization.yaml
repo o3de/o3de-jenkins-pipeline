@@ -1,0 +1,20 @@
+# Config for Project-based Matrix Authorization Strategy
+# Default admin role granted in jenkins.yaml
+jenkins:
+  authorizationStrategy:
+    projectMatrix:
+      permissions:
+      # O3DE Maintainers
+      - "Job/Build:o3de*maintainers"
+      - "Job/Cancel:o3de*maintainers"
+      - "Overall/Read:o3de*maintainers"
+      # O3DE Reviewers
+      - "Job/Build:o3de*reviewers"
+      - "Job/Cancel:o3de*reviewers"
+      - "Overall/Read:o3de*reviewers"
+      # O3DE Bots
+      - "Job/Build:o3de*bots"
+      - "Job/Cancel:o3de*bots"
+      - "Overall/Read:o3de*bots"
+      # Public read access
+      - "Overall/Read:anonymous"
