@@ -9,7 +9,7 @@
 import json
 import aws_cdk.aws_ec2 as ec2
 import aws_cdk.aws_ecs as ecs
-import aws_cdk.aws_ecr as ecr
+import aws_cdk.aws_ecr_assets as ecr_assets
 import aws_cdk.aws_efs as efs
 import aws_cdk.aws_elasticloadbalancingv2 as elb
 import aws_cdk.aws_iam as iam
@@ -22,10 +22,6 @@ from aws_cdk.core import Construct, Stack
 
 
 CONFIG_FILE = 'stack_config.json'
-
-
-class MissingContextError(Exception):
-    pass
 
 
 class JenkinsServerStack(Stack):
@@ -41,9 +37,9 @@ class JenkinsServerStack(Stack):
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
+        self.stack_tags = self.tags.tag_values()
         self.stack_config = self._load_stack_config(CONFIG_FILE)
-        self.repo_name = self._get_required_context('repo-name')
-        self.cert_arn = self._get_required_context('cert-arn')
+        self.cert_arn = self._load_cert_arn()
 
         self.vpc = ec2.Vpc(self, 'VPC',
             cidr=self.stack_config['vpc']['cidr'],
@@ -66,13 +62,12 @@ class JenkinsServerStack(Stack):
             print(f'Config file cannot be found: {config_file}')
             raise
 
-    def _get_required_context(self, context_name):
-        """Get context value and raise an exception if it does not exist. Prevents failures during deployment."""
-        context_value = self.node.try_get_context(context_name)
-        if context_value is None:
-            print(f'Required context missing: {context_name}')
-            raise MissingContextError
-        return context_value
+    def _load_cert_arn(self):
+        """Load cert arn. If cdk context does not exist pull from tags (stack is being deployed via pipelines)."""
+        cert_arn = self.node.try_get_context('cert-arn')
+        if cert_arn is None:
+            cert_arn = self.stack_tags['cert-arn']
+        return cert_arn
 
     def _create_efs(self):
         """Create a file system with an access point for the jenkins home directory."""
@@ -144,10 +139,11 @@ class JenkinsServerStack(Stack):
 
         port = ecs_config['service']['application_port']
 
-        # Container image is pulled from the ECR Repo uploaded during the pipeline build stage
-        repo = ecr.Repository.from_repository_name(self, 'EcrRepo', self.repo_name)
+        # Container image is created from the dockerfile at the root of the repo and uploaded to ECR
         container = fargate_task_def.add_container('JenkinsContainer',
-            image=ecs.ContainerImage.from_ecr_repository(repo, tag=ecs_config['container']['image_tag']),
+            image=ecs.ContainerImage.from_docker_image_asset(
+                ecr_assets.DockerImageAsset(self, 'JenkinsDockerImage', directory='..')
+            ),
             logging=ecs.LogDriver.aws_logs(
                 stream_prefix='jenkins',
                 log_group=self.log_group
