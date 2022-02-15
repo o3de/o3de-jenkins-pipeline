@@ -15,7 +15,7 @@ from aws_cdk import (
 )
 
 
-class JenkinsServerPipelineStack(core.Stack):
+class JenkinsPipeline(core.Stack):
     """Defines the pipeline to deploy a Jenkins server.
     
     Source stage: Pulls dockerfile and buildspec.yaml from the repo to build the docker image.
