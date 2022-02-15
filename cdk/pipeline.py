@@ -35,7 +35,7 @@ class JenkinsPipeline(Stack):
     Parameters are passed to the pipeline through context values. An exception is raised if a required parameter
     is missing.
 
-    A staging stack is deploy if the staging-cert-arn context is provided.
+    A staging stack is deployed if the staging-cert-arn context is provided.
 
     """
 
