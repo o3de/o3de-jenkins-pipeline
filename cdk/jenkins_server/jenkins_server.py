@@ -206,7 +206,8 @@ class JenkinsServerStack(Stack):
 
         alb.log_access_logs(
             s3.Bucket(self, 'AccessLogsBucket',
-                block_public_access=s3.BlockPublicAccess.BLOCK_ALL
+                block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
+                encryption=s3.BucketEncryption.S3_MANAGED
             )
         )
 
