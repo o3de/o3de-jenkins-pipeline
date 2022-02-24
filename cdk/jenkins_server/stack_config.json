@@ -103,6 +103,6 @@
     },
     "vpc": {
         "cidr": "172.32.0.0/16",
-        "nat_gateways": 1
+        "nat_gateways": 0
     }
 }
