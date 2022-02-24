@@ -134,7 +134,8 @@ class JenkinsServerStack(Stack):
                 resources = permission['resources']
             fargate_task_def.add_to_task_role_policy(iam.PolicyStatement(
                 actions=permission['actions'],
-                resources=[resources]
+                resources=[resources],
+                conditions=permission.get('conditions')
             ))
 
         port = ecs_config['service']['application_port']
