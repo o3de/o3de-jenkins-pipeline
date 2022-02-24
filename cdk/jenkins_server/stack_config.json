@@ -38,13 +38,23 @@
                     "ec2:DescribeSecurityGroups",
                     "ec2:DescribeSubnets",
                     "iam:ListInstanceProfilesForRole",
-                    "iam:PassRole",
                     "iam:CreateServiceLinkedRole",
                     "iam:ListRoles",
                     "iam:ListInstanceProfiles",
                     "ec2:GetPasswordData"
                 ],
                 "resources": "*"
+            },
+            "ec2_plugin_pass_role": {
+                "actions": [
+                    "iam:PassRole"
+                ],
+                "resources": "*",
+                "conditions": {
+                    "StringEquals": {
+                        "iam:PassedToService": "ec2.amazonaws.com"
+                    }
+                }
             },
             "sns_notifications": {
                 "actions":[
