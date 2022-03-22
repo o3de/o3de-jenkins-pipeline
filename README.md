@@ -100,8 +100,11 @@ This allows AWS services to connect to third-party repos.
     - Use` --profile` to use a named config
 ```
 export CDK_NEW_BOOTSTRAP=1
-cdk bootstrap aws://ACCOUNT/REGION --cloudformation-execution-policies arn:aws:iam::aws:policy/AdministratorAccess
+cdk bootstrap aws://ACCOUNT/REGION --cloudformation-execution-policies "arn:aws:iam::aws:policy/AWSCodePipelineFullAccess,arn:aws:iam::aws:policy/IAMFullAccess,arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess,arn:aws:iam::aws:policy/AmazonECS_FullAccess,arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess,arn:aws:iam::aws:policy/CloudWatchFullAccess,arn:aws:iam::aws:policy/AmazonSNSFullAccess,arn:aws:iam::aws:policy/AmazonS3FullAccess,arn:aws:iam::aws:policy/AWSCodeStarFullAccess,arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess,arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
 ```
+
+> :warning: The ARNs of the managed policies listed in the bootstrap command will be assumed by CloudFormation and are required to deploy the CDK stacks. If you have already bootstrapped this account/region for existing CDK stacks, make sure to include your existing policies in this step or the deployments in those stacks will fail. You can skip this step if your existing CloudFormation execution policy already includes the permissions defined here or if you have granted it full permissions. 
+
 2. Clone your repo and create a target branch for deployments
 3. Add your configs
     - Update `cdk/cdk.context.json` with the required context values (alternatively you can provide these values using `--context` when running `cdk deploy`)
