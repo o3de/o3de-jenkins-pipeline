@@ -488,7 +488,6 @@ Resources:
                   - "iam:AttachRolePolicy"
                   - "iam:CreateRole"
                   - "iam:CreatePolicy"
-                  - "iam:CreateRole"
                   - "iam:DeletePolicy"
                   - "iam:DeleteRole"
                   - "iam:DeleteRolePolicy"
