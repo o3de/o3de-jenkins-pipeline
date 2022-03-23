@@ -138,6 +138,9 @@ pip install -r requirements.txt
 4. Run cdk deploy and confirm the deployment when prompted
     - Use `--profile` to use a named config
     - Use `--context` to provide values not added to `cdk.context.json`
+
+> :warning: Review the items listed under `IAM Statement Changes` prior to confirming and deploying the CDK stack. During the bootstrap step CloudFormation was granted IAM permissions required to create and assign roles for deployments. Pay attention to this section especially if you've customized the IAM permissions in the stack. 
+
 ```
 cdk deploy
 ```
