@@ -95,17 +95,16 @@ This allows AWS services to connect to third-party repos.
 
 #### Deployment Steps:
 
-1. Perform a one-time bootstrap step for each AWS account/region you'll deploy this pipeline.
-    - Replace ACCOUNT and REGION with the appropriate values. 
+1. Clone the repo then navigate to the CDK directory. Perform a one-time bootstrap step for each AWS account/region you'll deploy this pipeline.
     - Use` --profile` to use a named config
 ```
-export CDK_NEW_BOOTSTRAP=1
-cdk bootstrap aws://ACCOUNT/REGION --cloudformation-execution-policies "arn:aws:iam::aws:policy/AWSCodePipelineFullAccess,arn:aws:iam::aws:policy/IAMFullAccess,arn:aws:iam::aws:policy/ElasticLoadBalancingFullAccess,arn:aws:iam::aws:policy/AmazonECS_FullAccess,arn:aws:iam::aws:policy/AmazonElasticFileSystemFullAccess,arn:aws:iam::aws:policy/CloudWatchFullAccess,arn:aws:iam::aws:policy/AmazonSNSFullAccess,arn:aws:iam::aws:policy/AmazonS3FullAccess,arn:aws:iam::aws:policy/AWSCodeStarFullAccess,arn:aws:iam::aws:policy/AWSCodeBuildAdminAccess,arn:aws:iam::aws:policy/AmazonSSMReadOnlyAccess"
+cd cdk
+aws cloudformation create-stack --stack-name CDKToolkit --template-body file://bootstrap-template.yaml --capabilities CAPABILITY_NAMED_IAM
 ```
 
-> :warning: The ARNs of the managed policies listed in the bootstrap command will be assumed by CloudFormation and are required to deploy the CDK stacks. If you have already bootstrapped this account/region for existing CDK stacks, make sure to include your existing policies in this step or the deployments in those stacks will fail. You can skip this step if your existing CloudFormation execution policy already includes the permissions defined here or if you have granted it full permissions. 
+> :warning: The bootstrap template contains IAM policies that will be assumed by CloudFormation which are required to deploy the CDK stacks. If you have already bootstrapped this account/region for existing CDK stacks, you'll need to merge this template then run `aws cloudformation update-stack`. The policies can be found under the `CloudFormationExecutionRole:` resource. You can also skip this step if your existing CloudFormation execution policy already includes the permissions defined here or if you have granted it full permissions. 
 
-2. Clone your repo and create a target branch for deployments
+2. Create a target branch for deployments
 3. Add your configs
     - Update `cdk/cdk.context.json` with the required context values (alternatively you can provide these values using `--context` when running `cdk deploy`)
     - Update `configs/jenkins.yaml` and provide the require values for the GitHub client ID and secret. Also add additional config files if required. See **Jenkins Configuration** section above.
@@ -114,16 +113,13 @@ cdk bootstrap aws://ACCOUNT/REGION --cloudformation-execution-policies "arn:aws:
 5. Deploy: This is a one-time manual deployment. Further updates will be deployed through the CDK pipeline. Follow the steps in the **CDK Deployment Steps** section below.
 
 #### CDK Deployment Steps
-1. Navigate to the CDK directory. From the repo root run:
-```
-cd cdk
-```
-2. Recommended: Create a virtualenv
+Run these steps within the cdk directoy.
+1. Recommended: Create a virtualenv
 
 ```
 python3 -m venv .venv
 ```
-3. Activate the virtualenv
+2. Activate the virtualenv
 
 - Mac/Linux:
 ```
@@ -134,12 +130,12 @@ source .venv/bin/activate
 .venv\Scripts\activate.bat
 ```
 
-4. Install the required dependenciies
+3. Install the required dependenciies
 ```
 pip install -r requirements.txt
 ```
 
-5. Run cdk deploy and confirm the deployment when prompted
+4. Run cdk deploy and confirm the deployment when prompted
     - Use `--profile` to use a named config
     - Use `--context` to provide values not added to `cdk.context.json`
 ```
