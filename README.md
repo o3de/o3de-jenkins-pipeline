@@ -78,8 +78,7 @@ The pipeline has the following stages:
 - Required context values (passed via `cdk.context.json` or `cdk deploy --context`)
     - repo: org/repo name of the Github repo (e.g. o3de/o3de-jenkins-pipeline)
     - branch: name of the branch used for pipeline deployments
-    - prod-cert-arn: This can be an SSL cert created by or imported into AWS Certificate Manager (ACM). See **ACM SSL Certificate Setup** below
-    - staging-cert-arn (Optional): If this context is provided, the pipeline will create a staging Jenkins instance for testing 
+    - cert-arn: This can be an SSL cert created by or imported into AWS Certificate Manager (ACM). See **ACM SSL Certificate Setup** below
     - codestar-connection: This grants access to CodePipeline to access the GitHub repo hosting your config files. See **CodeStar Connection Setup** below.
 
 ##### ACM SSL Certificate Setup

@@ -1,4 +1,4 @@
-FROM jenkins/jenkins:2.303.3-lts-jdk11
+FROM jenkins/jenkins:2.332.3-lts-jdk11
 
 # Using JENKINS_HOME and REF set on the base image
 ARG uid=1000

@@ -18,6 +18,15 @@
             "memory": 30720
         },
         "task_role_permissions": {
+            "task_exectution_policy": {
+                "actions":[
+                    "ecr:GetAuthorizationToken",
+                    "ecr:BatchCheckLayerAvailability",
+                    "ecr:GetDownloadUrlForLayer",
+                    "ecr:BatchGetImage"
+                ],
+                "resources": "*"
+            },
             "ec2_plugin": {
                 "actions":[
                     "ec2:DescribeSpot*",
@@ -55,6 +64,12 @@
                         "iam:PassedToService": "ec2.amazonaws.com"
                     }
                 }
+            },
+            "config_secrets": {
+                "actions": [
+                    "ssm:GetParameter"
+                ],
+                "resources": "arn:aws:ssm:*:*:parameter/jenkins/*"
             },
             "sns_notifications": {
                 "actions":[

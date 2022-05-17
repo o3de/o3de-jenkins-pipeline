@@ -169,9 +169,9 @@ class JenkinsServerStack(Stack):
 
         fargate_service = ecs.FargateService(self, 'FargateService',
             task_definition=fargate_task_def,
+            assign_public_ip=True,
             platform_version=ecs.FargatePlatformVersion.VERSION1_4,
             cluster=cluster,
-            deployment_controller=ecs.DeploymentController(type=ecs.DeploymentControllerType.CODE_DEPLOY),
             desired_count=ecs_config['service']['desired_count']
         )
 
