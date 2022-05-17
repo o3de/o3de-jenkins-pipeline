@@ -22,7 +22,7 @@ class JenkinsServer(Stage):
     def __init__(self, scope: Construct, id: str, cert_arn: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
-        JenkinsServerStack(self, f'{id}Stack',
+        JenkinsServerStack(self, 'JenkinsServerStack',
             tags={
                 'cert-arn': cert_arn
             }
@@ -35,8 +35,6 @@ class JenkinsPipeline(Stack):
     Parameters are passed to the pipeline through context values. An exception is raised if a required parameter
     is missing.
 
-    A staging stack is deployed if the staging-cert-arn context is provided.
-
     """
 
     def __init__(self, scope: Construct, id: str, **kwargs) -> None:
@@ -44,8 +42,7 @@ class JenkinsPipeline(Stack):
         self.codestar_connection = self._get_required_context('codestar-connection')
         self.repo = self._get_required_context('repo')
         self.branch = self._get_required_context('branch')
-        self.prod_cert_arn = self._get_required_context('prod-cert-arn')
-        self.staging_cert_arn = self.node.try_get_context('staging-cert-arn')
+        self.cert_arn = self._get_required_context('cert-arn')
 
         self._create_pipeline()
 
@@ -71,8 +68,7 @@ class JenkinsPipeline(Stack):
                         --context codestar-connection={self.codestar_connection} \
                         --context repo={self.repo}  \
                         --context branch={self.branch} \
-                        --context prod-cert-arn={self.prod_cert_arn} \
-                        --context staging-cert-arn={self.staging_cert_arn}'
+                        --context cert-arn={self.cert_arn}'
                 ],
                 primary_output_directory='cdk/cdk.out',
                 role_policy_statements=[
@@ -89,17 +85,9 @@ class JenkinsPipeline(Stack):
             )
         )
 
-        if self.staging_cert_arn is not None:
-            pipeline.add_stage(
-                JenkinsServer(self, 'staging',
-                    cert_arn=self.staging_cert_arn,
-                    env=Environment(account=self.account, region=self.region)
-                )
-            )
-
         pipeline.add_stage(
-            JenkinsServer(self, 'prod',
-                cert_arn=self.prod_cert_arn,
+            JenkinsServer(self, self.branch,
+                cert_arn=self.cert_arn,
                 env=Environment(account=self.account, region=self.region)
             ),
             pre=[
