@@ -481,6 +481,7 @@ Resources:
                 Action:
                   - "codestar-connections:GetConnection"
                   - "codestar-connections:ListConnections"
+                  - "codestar-connections:UseConnection"
                   - "ec2:AllocateAddress"
                   - "ec2:DescribeAddresses"
                   - "ec2:DisassociateAddress"
