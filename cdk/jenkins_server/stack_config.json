@@ -69,7 +69,7 @@
                 "actions": [
                     "ssm:GetParameter"
                 ],
-                "resources": "arn:aws:ssm:*:*:parameter/*"
+                "resources": "arn:aws:ssm:*:*:parameter/jenkins/*"
             },
             "sns_notifications": {
                 "actions":[
