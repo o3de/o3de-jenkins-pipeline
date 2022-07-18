@@ -4,7 +4,9 @@ FROM jenkins/jenkins:2.332.3-lts-jdk11
 ARG uid=1000
 ARG gid=1000
 ARG user=jenkins
-ARG jenkins_local=/var/jenkins_local
+ARG JENKINS_LOCAL=/var/jenkins_local
+
+ENV JENKINS_LOCAL $JENKINS_LOCAL
 
 USER root
 
@@ -15,24 +17,25 @@ RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2
 # Prevent Jenkins server from pulling LFS objects
 RUN git lfs uninstall --system
 
-RUN mkdir -p $jenkins_local \
-  && chown ${uid}:${gid} $jenkins_local
+RUN mkdir -p $JENKINS_LOCAL \
+  && chown ${uid}:${gid} $JENKINS_LOCAL
 
 USER $user
 
 # Create custom directories and logs. 
 # Jenkins cannot create these on its own and will fail to start if they do not exist.
-RUN mkdir ${jenkins_local}/war \
+RUN mkdir ${JENKINS_LOCAL}/war \
   && mkdir ${REF}/logs \ 
   && touch ${REF}/logs/gc.log
 
 COPY plugins.txt ${REF}/plugins.txt
 RUN jenkins-plugin-cli --plugin-file ${REF}/plugins.txt
 
-ENV CASC_JENKINS_CONFIG=${JENKINS_HOME}/configs
-COPY configs/ ${REF}/configs/
+ENV CASC_JENKINS_CONFIG=${JENKINS_LOCAL}/configs
+COPY configs/ ${JENKINS_LOCAL}/configs/
+COPY jobdsl/ ${JENKINS_LOCAL}/jobdsl/
 
-ENV JENKINS_OPTS="--webroot=${jenkins_local}/war"
+ENV JENKINS_OPTS="--webroot=${JENKINS_LOCAL}/war"
 ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false \
   -Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400 \
   -Djenkins.model.Jenkins.logStartupPerformance=true \
@@ -50,3 +53,7 @@ ENV JAVA_OPTS="-Djenkins.install.runSetupWizard=false \
   -Xlog:gc*=warning \
   -XX:ErrorFile=${JENKINS_HOME}/logs/hs_err_%p.log \
   -XX:LogFile=${JENKINS_HOME}/logs/vm.log"
+
+# Start jenkins using a custom entrypoint. See start-jenkins.sh for details.
+COPY start-jenkins.sh /usr/local/bin/start-jenkins.sh
+ENTRYPOINT ["/sbin/tini", "--", "/usr/local/bin/start-jenkins.sh"]
