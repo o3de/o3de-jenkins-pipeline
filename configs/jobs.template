@@ -1,0 +1,5 @@
+# Config file for Job DSL plugin.
+# Add a file entry for each groovy script containing job definitions.
+# Recommended: Store files in JENKINS_LOCAL to prevent state data in JENKINS_HOME
+jobs:
+  - file: ${JENKINS_LOCAL}/jobdsl/example_job.groovy

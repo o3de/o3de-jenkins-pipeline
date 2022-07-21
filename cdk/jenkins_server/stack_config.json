@@ -1,0 +1,123 @@
+{
+    "alb": {
+        "ports": {
+            "prod": 443,
+            "test": 8443
+        },
+        "ssl_policy": "TLS12",
+        "health_check": {
+            "path": "/login",
+            "healthy_threshold_count": 2,
+            "unhealthy_threshold_count": 10
+        },
+        "public": true
+    },
+    "ecs": {
+        "task": {
+            "cpu": 4096,
+            "memory": 30720
+        },
+        "task_role_permissions": {
+            "task_exectution_policy": {
+                "actions":[
+                    "ecr:GetAuthorizationToken",
+                    "ecr:BatchCheckLayerAvailability",
+                    "ecr:GetDownloadUrlForLayer",
+                    "ecr:BatchGetImage"
+                ],
+                "resources": "*"
+            },
+            "ec2_plugin": {
+                "actions":[
+                    "ec2:DescribeSpot*",
+                    "ec2:CancelSpotInstanceRequests",
+                    "ec2:GetConsoleOutput",
+                    "ec2:RequestSpotInstances",
+                    "ec2:RunInstances",
+                    "ec2:StartInstances",
+                    "ec2:StopInstances",
+                    "ec2:TerminateInstances",
+                    "ec2:CreateTags",
+                    "ec2:DeleteTags",
+                    "ec2:DescribeInstances",
+                    "ec2:DescribeKeyPairs",
+                    "ec2:DescribeRegions",
+                    "ec2:DescribeImages",
+                    "ec2:DescribeAvailabilityZones",
+                    "ec2:DescribeSecurityGroups",
+                    "ec2:DescribeSubnets",
+                    "iam:ListInstanceProfilesForRole",
+                    "iam:CreateServiceLinkedRole",
+                    "iam:ListRoles",
+                    "iam:ListInstanceProfiles",
+                    "ec2:GetPasswordData"
+                ],
+                "resources": "*"
+            },
+            "ec2_plugin_pass_role": {
+                "actions": [
+                    "iam:PassRole"
+                ],
+                "resources": "*",
+                "conditions": {
+                    "StringEquals": {
+                        "iam:PassedToService": "ec2.amazonaws.com"
+                    }
+                }
+            },
+            "config_secrets": {
+                "actions": [
+                    "ssm:GetParameter"
+                ],
+                "resources": "arn:aws:ssm:*:*:parameter/jenkins/*"
+            },
+            "sns_notifications": {
+                "actions":[
+                    "sns:Publish"
+                ],
+                "resources": "arn.sns"
+            },
+            "aws_logs": {
+                "actions":[
+                    "logs:CreateLogStream",
+                    "logs:PutLogEvents"
+                ],
+                "resources": "arn.log_group"
+            }
+        },
+        "container": {
+            "image_tag": "lts",
+            "mount_point": {
+                "container_path": "/var/jenkins_home",
+                "read_only": false,
+                "source_volume": "efs_volume"
+            },
+            "volume_name": "efs_volume",
+            "ulimits": [
+                {
+                    "name": "NOFILE",
+                    "hard_limit": 8192,
+                    "soft_limit": 4096
+                },
+                {
+                    "name": "NPROC",
+                    "hard_limit": 30654,
+                    "soft_limit": 30654
+                }
+            ]
+        },
+        "service": {
+            "application_port": 8080,
+            "desired_count": 1
+        }
+    },
+    "efs": {
+        "user_id": "1000",
+        "permissions": "755",
+        "access_point_path": "/jenkins_home"
+    },
+    "vpc": {
+        "cidr": "172.32.0.0/16",
+        "nat_gateways": 0
+    }
+}
