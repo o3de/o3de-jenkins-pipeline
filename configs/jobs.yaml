@@ -1,0 +1,12 @@
+# Config file for Job DSL plugin.
+# Add a file entry for each groovy script containing job definitions.
+# Recommended: Store files in JENKINS_LOCAL to prevent state data in JENKINS_HOME
+jobs:
+  - file: ${JENKINS_LOCAL}/jobdsl/mars_metrics.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/o3de_atom_sampleviewer.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/o3de_development_nightly_installer.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/o3de_development_periodic_incremental_daily.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/o3de_netsoaktest.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/o3de.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/override_pr_status_check.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/validate_build_failure_rca.groovy
