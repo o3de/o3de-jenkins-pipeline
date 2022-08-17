@@ -1,30 +1,31 @@
 # O3DE Jenkins Pipeline
 
-This project automates the deployment of the Jenkins Pipeline that runs the checks on all pull requests submitted to the [Open 3D Engine (O3DE)](https://github.com/o3de/o3de).
+This project automates the deployment of the O3DE Jenkins Pipeline that runs the checks on all pull requests submitted to the [Open 3D Engine (O3DE)](https://github.com/o3de/o3de).
 
 Jenkins Configuration Components:
-- Dockerfile: Generates a custom base image from the [Jenkins Docker parent image](https://github.com/jenkinsci/docker).
-- Jenkins Configuration as Code (JCasC): This manages the configuration of the Jenkins server using YAML files stored in the repo.
+- Dockerfile: Generates a custom image from the [Jenkins Docker Image](https://github.com/jenkinsci/docker).
+- Jenkins Configuration as Code (JCasC): This automates the configuration of the Jenkins server.
 - Job DSL: Pipeline jobs defined using Job DSL will be configured automatically using JCasC.
-- Plugins Manager: The plugin installation manager tool provided in the parent image will install the plugins defined here. 
+- Plugins Manager: The plugin installation manager tool provided in the parent image will install the plugins defined in the repo. 
 
 Hosting Components:
 
 - AWS Cloud Development Kit (CDK) Stacks: This will setup stacks using CodePipeline and ECS to host Jenkins and automate its deployment.
+## Jenkins Docker Image
 
-## Jenkins Configuration
+We use the [Jenkins Docker Image](https://github.com/jenkinsci/docker) as the parent in our `dockerfile` to generate our custom image. This allows us to install our required plugins and load other custom options.
 
-The O3DE Jenkins Pipeline is configured using the JCasC plugin. This allows the settings to be defined using yaml files stored in the repo and prevents users from having to manually configure Jenkins on startup. 
+## JCasC
 
-These files are located in the configs/ directory. There is a main jenkins.yaml file that contains the recommended default settings to run the pipeline. You can customize your Jenkins setup by editing this file. There are also template files that can be used for other optional settings. You can either copy the contents of these files into jenkins.yaml or copy it into a new yaml file. 
+Jenkins is configured using the JCasC plugin. This allows the settings to be defined using yaml files stored in the repo and prevents users from having to manually configure Jenkins on startup. 
 
+These files should be located in the `configs` directory so that they are found by the plugin.. There is a main `jenkins.yaml` file that contains the recommended default settings. You can customize your Jenkins setup by editing this file. 
 
-### Config File location
-The config files must be located in the configs/ directory so that they are found by the plugin. The plugin also supports having multiple yaml files and will locate all files having the .yml/.yaml extention.
+There are also template files that can be used for other optional settings. The plugin also supports having multiple yaml files and will locate all files having the .yml/.yaml extention.
 
-## Job DSL Setup
+## Job DSL
 
-JCasC provides support for the Job DSL plugin to automatically configure the pipeline jobs. It's recommended to store the config files in the `jobdsl` directory at the root of the project and reference them in `configs/jobs.yaml`.
+JCasC provides support for the Job DSL plugin to automatically configure pipeline jobs. It's recommended to store the config files in the `jobdsl` directory at the root of the project and reference them in `configs/jobs.yaml`.
 
 Directory Structure:
 ```
@@ -48,6 +49,10 @@ jobs:
 Note: The `jobdsl` directroy is copied into $JENKINS_LOCAL when the docker image is created.
 
 To get started the basic Job DSL API reference can be found here: https://jenkinsci.github.io/job-dsl-plugin/ The complete API reference which includes all installed plugins can be found on your Jenkins server: `$JENKINS_URL/plugin/job-dsl/api-viewer/index.html`
+
+## Installing Plugins
+
+The list of plugins installed on the Jenkins server is maintained in the `plugins.txt` file. Plugins added/removed from this list will be installed/uninstalled when a new image is created and deployed. 
 
 ## Running your own Jenkins Pipeline
 
