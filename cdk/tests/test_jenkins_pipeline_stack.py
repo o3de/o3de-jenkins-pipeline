@@ -72,7 +72,6 @@ def test_stack_context_values(template):
 
 def test_required_resources(template):
     template.resource_count_is("AWS::CodePipeline::Pipeline", 1)
-    template.resource_count_is("AWS::CodeBuild::Project", 2)
 
     # Verify the deploy stage is created
     template.has_resource_properties("AWS::CodePipeline::Pipeline", {
