@@ -6,6 +6,7 @@
 #
 #
 
+import aws_cdk.aws_codebuild as codebuild
 import aws_cdk.aws_iam as iam
 import aws_cdk.pipelines as pipelines
 
@@ -43,6 +44,7 @@ class JenkinsPipeline(Stack):
         self.repo = self._get_required_context('repo')
         self.branch = self._get_required_context('branch')
         self.cert_arn = self._get_required_context('cert-arn')
+        self.source = pipelines.CodePipelineSource.connection(self.repo, self.branch, connection_arn=self.codestar_connection)
 
         self._create_pipeline()
 
@@ -57,19 +59,20 @@ class JenkinsPipeline(Stack):
     def _create_pipeline(self):
         pipeline = pipelines.CodePipeline(self, 'Pipeline',
             synth=pipelines.CodeBuildStep('Synth',
-                input=pipelines.CodePipelineSource.connection(self.repo, self.branch,
-                    connection_arn=self.codestar_connection
-                ),
+                input=self.source,
                 commands=[
                     'cd cdk',
                     'npm install -g aws-cdk',
-                    'python3 -m pip install -r requirements.txt',
+                    'pip install -r requirements.txt',
                     f'cdk synth --verbose \
                         --context codestar-connection={self.codestar_connection} \
                         --context repo={self.repo}  \
                         --context branch={self.branch} \
                         --context cert-arn={self.cert_arn}'
                 ],
+                build_environment=codebuild.BuildEnvironment(
+                    build_image=codebuild.LinuxBuildImage.STANDARD_5_0
+                ),
                 primary_output_directory='cdk/cdk.out',
                 role_policy_statements=[
                     iam.PolicyStatement(
@@ -85,12 +88,25 @@ class JenkinsPipeline(Stack):
             )
         )
 
+        cdk_tests = pipelines.CodeBuildStep('CDKTests',
+            input=self.source,
+            commands=[
+                'cd cdk',
+                'pip install -r requirements.txt'
+                'python -m pytest -v'
+            ],
+            build_environment=codebuild.BuildEnvironment(
+                build_image=codebuild.LinuxBuildImage.STANDARD_5_0
+            )
+        )
+
         pipeline.add_stage(
             JenkinsServer(self, self.branch,
                 cert_arn=self.cert_arn,
                 env=Environment(account=self.account, region=self.region)
             ),
             pre=[
+                cdk_tests,
                 pipelines.ManualApprovalStep('ReleaseToProd')
             ]
         )
