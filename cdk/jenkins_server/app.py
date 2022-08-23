@@ -8,7 +8,7 @@
 
 import os
 import sys
-import aws_cdk.core as cdk
+import aws_cdk as cdk
 
 from jenkins_server import JenkinsServerStack
 

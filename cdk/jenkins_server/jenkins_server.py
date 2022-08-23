@@ -18,7 +18,8 @@ import aws_cdk.aws_sns as sns
 import aws_cdk.aws_s3 as s3
 
 from os import path
-from aws_cdk.core import Construct, Stack
+from aws_cdk import Stack
+from constructs import Construct
 
 
 CONFIG_FILE = 'stack_config.json'
