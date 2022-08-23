@@ -6,7 +6,7 @@
 #
 #
 
-import aws_cdk.core as cdk
+import aws_cdk as cdk
 import pytest
 
 from aws_cdk.assertions import Match, Template
