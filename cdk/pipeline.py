@@ -9,7 +9,8 @@
 import aws_cdk.aws_iam as iam
 import aws_cdk.pipelines as pipelines
 
-from aws_cdk.core import Environment, Construct, Stack, Stage
+from aws_cdk import Environment, Stack, Stage
+from constructs import Construct
 from jenkins_server.jenkins_server import JenkinsServerStack
 
 
