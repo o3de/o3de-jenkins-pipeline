@@ -1,0 +1,5 @@
+OPEN 3D ENGINE LICENSING
+The default license for Open 3D Engine is the Apache License, Version 2.0 
+(see LICENSE_APACHE2.TXT); you may elect at your option to use the Open 3D 
+Engine under the MIT License (see LICENSE_MIT.TXT).  Contributions must be 
+made under both licenses.
