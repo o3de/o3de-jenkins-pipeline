@@ -93,7 +93,7 @@ class JenkinsPipeline(Stack):
             input=self.source,
             commands=[
                 'cd cdk',
-                'pip install -r requirements.txt'
+                'pip install -r requirements.txt',
                 'python -m pytest -v'
             ],
             build_environment=codebuild.BuildEnvironment(
