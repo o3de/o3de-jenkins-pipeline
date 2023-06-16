@@ -45,6 +45,7 @@ class JenkinsPipeline(Stack):
         self.repo = self._get_required_context('repo')
         self.branch = self._get_required_context('branch')
         self.cert_arn = self._get_required_context('cert-arn')
+        self.vpc_id = self.node.try_get_context('vpc-id')
         self.source = pipelines.CodePipelineSource.connection(self.repo, self.branch, connection_arn=self.codestar_connection)
 
         self._create_pipeline()
@@ -67,9 +68,10 @@ class JenkinsPipeline(Stack):
                     'pip install -r requirements.txt',
                     f'cdk synth --verbose \
                         --context codestar-connection={self.codestar_connection} \
-                        --context repo={self.repo}  \
+                        --context repo={self.repo} \
                         --context branch={self.branch} \
-                        --context cert-arn={self.cert_arn}'
+                        --context cert-arn={self.cert_arn} \
+                        --context vpc-id={self.vpc_id}'
                 ],
                 build_environment=codebuild.BuildEnvironment(
                     build_image=codebuild.LinuxBuildImage.STANDARD_5_0
