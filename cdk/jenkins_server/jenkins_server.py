@@ -74,7 +74,7 @@ class JenkinsServerStack(Stack):
                 cidr=self.stack_config['vpc']['cidr'],
                 nat_gateways=self.stack_config['vpc']['nat_gateways']
             )
-        return ec2.Vpc.from_lookup(self, self.stack_tags['vpc-id'])
+        return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.stack_tags['vpc-id'])
 
     def _create_efs(self):
         """Create a file system with an access point for the jenkins home directory."""

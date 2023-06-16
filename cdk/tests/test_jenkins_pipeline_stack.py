@@ -20,12 +20,14 @@ BRANCH = "test"
 CERT_ARN = f"arn:aws:acm:{REGION}:{ACCOUNT}:certificate/certificate_id"
 CODESTAR_CONNECTION = f"arn:aws:codestar-connections:{REGION}:{ACCOUNT}:connection/codestar_id"
 REPO = "o3de/repo"
+VPC_ID = "vpc-01234567890"
 
 TEST_CONTEXT = {
     "branch": BRANCH,
     "cert-arn": CERT_ARN,
     "codestar-connection": CODESTAR_CONNECTION,
-    "repo": REPO
+    "repo": REPO,
+    "vpc-id": VPC_ID
   }
 
 
