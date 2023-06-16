@@ -46,7 +46,7 @@ class JenkinsPipeline(Stack):
         self.repo = self._get_required_context('repo')
         self.branch = self._get_required_context('branch')
         self.cert_arn = self._get_required_context('cert-arn')
-        self.vpc_id = self.node.try_get_context('vpc-id')
+        self.vpc_id = self._get_optional_context('vpc-id')
         self.source = pipelines.CodePipelineSource.connection(self.repo, self.branch, connection_arn=self.codestar_connection)
 
         self._create_pipeline()
@@ -58,6 +58,10 @@ class JenkinsPipeline(Stack):
             print(f'Required context missing: {context_name}')
             raise MissingContextError
         return context_value
+    
+    def _get_optional_context(self, context_name):
+        """Get context value and set it to 'None' if it does not exist. Some constructs cannot have a null or empty string ID."""
+        return self.node.try_get_context(context_name) or 'None'
 
     def _create_pipeline(self):
         pipeline = pipelines.CodePipeline(self, 'Pipeline',
