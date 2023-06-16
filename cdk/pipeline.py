@@ -21,12 +21,13 @@ class MissingContextError(Exception):
 
 class JenkinsServer(Stage):
     """Stage wrapper for the Jenkins server stack."""
-    def __init__(self, scope: Construct, id: str, cert_arn: str, **kwargs) -> None:
+    def __init__(self, scope: Construct, id: str, cert_arn: str, vpc_id: str, **kwargs) -> None:
         super().__init__(scope, id, **kwargs)
 
         JenkinsServerStack(self, 'JenkinsServerStack',
             tags={
-                'cert-arn': cert_arn
+                'cert-arn': cert_arn,
+                'vpc-id': vpc_id
             }
         )
 
@@ -106,6 +107,7 @@ class JenkinsPipeline(Stack):
         pipeline.add_stage(
             JenkinsServer(self, self.branch,
                 cert_arn=self.cert_arn,
+                vpc_id=self.vpc_id,
                 env=Environment(account=self.account, region=self.region)
             ),
             pre=[
