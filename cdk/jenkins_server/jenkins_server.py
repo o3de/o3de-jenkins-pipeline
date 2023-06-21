@@ -31,7 +31,7 @@ class JenkinsServerStack(Stack):
     Stack core components:
         - ECS/Fargate: Hosts the Jenkins server container
         - EFS: Stores the Jenkins home directory
-        - ALB: Load balencer to route traffic to the Fargate task
+        - ALB: Load balancer to route traffic to the Fargate task
 
     The options for each component are stored in the stack config file.
     """
@@ -42,10 +42,7 @@ class JenkinsServerStack(Stack):
         self.stack_config = self._load_stack_config(CONFIG_FILE)
         self.cert_arn = self._load_cert_arn()
 
-        self.vpc = ec2.Vpc(self, 'VPC',
-            cidr=self.stack_config['vpc']['cidr'],
-            nat_gateways=self.stack_config['vpc']['nat_gateways']
-        )
+        self.vpc = self._create_vpc()
         self.build_topic = sns.Topic(self, 'BuildTopic')
         self.log_group = logs.LogGroup(self, 'LogGroup')
         self.file_system, self.access_point = self._create_efs()
@@ -69,6 +66,15 @@ class JenkinsServerStack(Stack):
         if cert_arn is None:
             cert_arn = self.stack_tags['cert-arn']
         return cert_arn
+    
+    def _create_vpc(self):
+        """Create a new VPC or use an existing one if a VPC ID is provided."""
+        if self.stack_tags['vpc-id'] == 'None':  # Context values will be converted to string and cannot be empty during synth
+            return ec2.Vpc(self, 'VPC',
+                cidr=self.stack_config['vpc']['cidr'],
+                nat_gateways=self.stack_config['vpc']['nat_gateways']
+            )
+        return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.stack_tags['vpc-id'])
 
     def _create_efs(self):
         """Create a file system with an access point for the jenkins home directory."""

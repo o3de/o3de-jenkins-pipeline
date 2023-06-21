@@ -16,12 +16,19 @@ from test_jenkins_pipeline_stack import CERT_ARN, TEST_CONTEXT
 
 ACCOUNT = "123456789012"
 REGION = "us-west-2"
+VPC_ID = "None"  # Used to test that a VPC is still created if one is not provided
 
 
 @pytest.fixture
 def template():
     app = cdk.App(context=TEST_CONTEXT)
-    jenkins_server_stack = JenkinsServerStack(app, 'JenkinsServerStack', env=cdk.Environment(account=ACCOUNT, region=REGION))
+    jenkins_server_stack = JenkinsServerStack(app, 'JenkinsServerStack', 
+                                                env=cdk.Environment(account=ACCOUNT, region=REGION),
+                                                tags={
+                                                    'cert-arn': CERT_ARN,
+                                                    'vpc-id': VPC_ID
+                                                }
+                                              )
 
     return Template.from_stack(jenkins_server_stack)
 
