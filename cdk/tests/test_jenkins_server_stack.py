@@ -16,7 +16,7 @@ from test_jenkins_pipeline_stack import CERT_ARN, TEST_CONTEXT
 
 ACCOUNT = "123456789012"
 REGION = "us-west-2"
-VPC_ID = "None"  # Used to test that VPC is created if one if not provided
+VPC_ID = "None"  # Used to test that a VPC is still created if one is not provided
 
 
 @pytest.fixture

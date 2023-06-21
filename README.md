@@ -123,6 +123,8 @@ The pipeline has the following stages:
     - branch: name of the branch used for pipeline deployments
     - cert-arn: This can be an SSL cert created by or imported into AWS Certificate Manager (ACM). See **ACM SSL Certificate Setup** below
     - codestar-connection: This grants access to CodePipeline to access the GitHub repo hosting your config files. See **CodeStar Connection Setup** below.
+- Optional context values
+    - vpc-id: Provide an ID to use an existing VPC for the Jenkins Server stack instead of creating a new one.
 
 ##### ACM SSL Certificate Setup
 
