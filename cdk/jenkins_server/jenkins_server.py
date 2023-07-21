@@ -179,7 +179,8 @@ class JenkinsServerStack(Stack):
             assign_public_ip=True,
             platform_version=ecs.FargatePlatformVersion.VERSION1_4,
             cluster=cluster,
-            desired_count=ecs_config['service']['desired_count']
+            desired_count=ecs_config['service']['desired_count'],
+            circuit_breaker=ecs.DeploymentCircuitBreaker(rollback=True)
         )
 
         self.file_system.connections.allow_default_port_from(fargate_service)
