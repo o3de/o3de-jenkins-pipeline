@@ -1,0 +1,42 @@
+# Config to create views to organize jobs
+jenkins:
+  primaryView:
+    list:
+      name: "O3DE"
+  views:
+  - all:
+      name: "all"
+  - list:
+      description: "AR Pipeline for the <a href=\"https://github.com/o3de/o3de\">O3DE\
+        \ Project</a>"
+      jobNames:
+      - "O3DE"
+      - "O3DE-development_nightly-installer"
+      - "o3de-extras/development"
+      - "o3de-netsoaktest/development"
+      - "O3DE/development"
+      - "O3DE/main"
+      - "O3DE_periodic-incremental-daily/development"
+      name: "O3DE"
+      recurse: true
+  - list:
+      jobNames:
+      - "o3de-atom-sampleviewer"
+      - "o3de-extras"
+      - "o3de-netsoaktest"
+      name: "Projects"
+  - list:
+      jobNames:
+      - "default-development_snapshot"
+      - "Installer"
+      - "LFS"
+      - "MARS Metrics"
+      - "O3DE-development_nightly-installer"
+      - "O3DE-hotfix_23.05.1_nightly-installer"
+      - "O3DE-Main_nightly-installer"
+      - "O3DE-test_nightly-installer"
+      - "override-pr-status-check"
+      - "periodic-incremental-daily-development-trigger"
+      - "periodic-incremental-daily-stabilization-trigger"
+      - "validate_build_failure_rca"
+      name: "Tools"

@@ -4,17 +4,27 @@ jenkins:
   authorizationStrategy:
     projectMatrix:
       permissions:
-      # O3DE Maintainers
-      - "Job/Build:o3de*maintainers"
-      - "Job/Cancel:o3de*maintainers"
-      - "Overall/Read:o3de*maintainers"
-      # O3DE Reviewers
-      - "Job/Build:o3de*reviewers"
-      - "Job/Cancel:o3de*reviewers"
-      - "Overall/Read:o3de*reviewers"
+      # Admin
+      - "USER:Overall/Administer:admin"
+      - "GROUP:Overall/Administer:o3de*aws-ops"
+      # O3DE Groups
+      - "GROUP:Job/Build:o3de*maintainers"
+      - "GROUP:Job/Cancel:o3de*maintainers"
+      - "GROUP:Job/Read:o3de*maintainers"
+      - "GROUP:Overall/Read:o3de*maintainers"
+      - "GROUP:View/Read:o3de*maintainers"
+      - "GROUP:Job/Build:o3de*reviewers"
+      - "GROUP:Job/Cancel:o3de*reviewers"
+      - "GROUP:Job/Read:o3de*reviewers"
+      - "GROUP:Overall/Read:o3de*reviewers"
+      - "GROUP:View/Read:o3de*reviewers"
       # O3DE Bots
-      - "Job/Build:o3de*bots"
-      - "Job/Cancel:o3de*bots"
-      - "Overall/Read:o3de*bots"
+      - "GROUP:Job/Build:o3de*bots"
+      - "GROUP:Job/Cancel:o3de*bots"
+      - "GROUP:Job/Read:o3de*bots"
+      - "GROUP:Overall/Read:o3de*bots"
+      - "GROUP:Run/Update:o3de*bots"
+      - "GROUP:View/Read:o3de*bots"
       # Public read access
-      - "Overall/Read:anonymous"
+      - "USER:Overall/Read:anonymous"
+      - "GROUP:Overall/Read:authenticated"
