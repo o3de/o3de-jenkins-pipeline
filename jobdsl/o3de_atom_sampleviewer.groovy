@@ -3,9 +3,9 @@ multibranchPipelineJob('o3de-atom-sampleviewer') {
         branchSource {
             source {
                 github {
-                    id('o3de-atom-sampleviewer-GitHub')
+                    id('o3de-atom-sampleviewer')
                     configuredByUrl(false)
-                    credentialsId('github-access-token')
+                    credentialsId('o3de-ci-bot')
                     repoOwner('o3de')
                     repository('o3de-atom-sampleviewer')
                     repositoryUrl('https://github.com/o3de/o3de-atom-sampleviewer.git')
@@ -65,7 +65,7 @@ multibranchPipelineJob('o3de-atom-sampleviewer') {
     }
     triggers {
         periodicFolderTrigger {
-            interval('5m')
+            interval('2m')
         }
     }
 }

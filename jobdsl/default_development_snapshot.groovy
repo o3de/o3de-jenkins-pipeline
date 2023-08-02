@@ -1,4 +1,4 @@
-pipelineJob('O3DE-development_nightly-installer') {
+pipelineJob('default-development_snapsho') {
     definition {
         cpsScm {
             lightweight(true)
@@ -20,14 +20,7 @@ pipelineJob('O3DE-development_nightly-installer') {
             scriptPath('scripts/build/Jenkins/Jenkinsfile')
         }
     }
-    description('''
-        Outputs to S3/Cloudfront address: 
-
-        <tr><a href="https://o3debinaries.org/development/Latest/Windows/o3de_installer.exe">https://o3debinaries.org/development/Latest/Windows/o3de_installer.exe</a></tr>
-        <tr><a href="https://o3debinaries.org/development/Latest/Linux/O3DE_latest.deb">https://o3debinaries.org/development/Latest/Linux/O3DE_latest.deb</a></tr>
-        <tr><a href="https://o3debinaries.org/2.0.0/Linux/o3de_2.0.0_amd64.snap">https://o3debinaries.org/2.0.0/Linux/o3de_2.0.0_amd64.snap</a></tr>
-    '''.stripIndent().trim())
-    displayName('O3DE [Nightly Installer] Development')
+    description('Creates snapshots at regular intervals')
     logRotator {
         daysToKeep(7)
         numToKeep(14)
@@ -39,8 +32,6 @@ pipelineJob('O3DE-development_nightly-installer') {
                 permissions([
                     'GROUP:hudson.model.Item.Read:o3de*aws',
                     'GROUP:hudson.model.Item.Workspace:o3de*aws',
-                    'GROUP:hudson.model.Item.Read:o3de*maintainers',
-                    'GROUP:hudson.model.Item.Workspace:o3de*maintainers',
                     'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Create:o3de*aws-ops',
                     'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Delete:o3de*aws-ops',
                     'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:o3de*aws-ops',
@@ -63,13 +54,6 @@ pipelineJob('O3DE-development_nightly-installer') {
         }
         disableConcurrentBuilds {
             abortPrevious(false)
-        }
-        pipelineTriggers {
-            triggers {
-                pollSCM {
-                    scmpoll_spec('30 5 * * 1-6')
-                }
-            }
         }
     }
     quietPeriod(120)

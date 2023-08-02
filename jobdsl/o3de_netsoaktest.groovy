@@ -3,9 +3,9 @@ multibranchPipelineJob('o3de-netsoaktest') {
         branchSource {
             source {
                 github {
-                    id('o3de-netsoaktest-GitHub')
+                    id('o3de-netsoaktest')
                     configuredByUrl(false)
-                    credentialsId('github-access-token')
+                    credentialsId('o3de-ci-bot')
                     repoOwner('o3de')
                     repository('o3de-netsoaktest')
                     repositoryUrl('https://github.com/o3de/o3de-netsoaktest.git')
@@ -51,7 +51,6 @@ multibranchPipelineJob('o3de-netsoaktest') {
             trust(class: 'org.jenkinsci.plugins.github_branch_source.ForkPullRequestDiscoveryTrait$TrustEveryone')
         }
     }
-    displayName('NetSoakTest')
     factory {
         workflowBranchProjectFactory {
             scriptPath('Scripts/build/Jenkins/Jenkinsfile')
@@ -60,12 +59,12 @@ multibranchPipelineJob('o3de-netsoaktest') {
     orphanedItemStrategy {
         discardOldItems {
             daysToKeep(7)
-            numToKeep(14)
+            numToKeep(28)
         }
     }
     triggers {
         periodicFolderTrigger {
-            interval('5m')
+            interval('2m')
         }
     }
 }
