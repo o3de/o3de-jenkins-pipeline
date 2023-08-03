@@ -40,16 +40,33 @@ unclassified:
 security:
   scriptApproval:
     approvedSignatures:
-    - "field hudson.plugins.git.GitSCM GIT_BRANCH"
     - "field hudson.plugins.git.GitSCM GIT_COMMIT"
-    - "method hudson.model.Cause$UserIdCause getUserId"
+    - "field hudson.plugins.git.GitSCMBackwardCompatibility source"
+    - "field hudson.plugins.git.UserRemoteConfig refspec"
+    - "field java.lang.String value"
+    - "method groovy.lang.Closure leftShift groovy.lang.Closure"
+    - "method groovy.lang.GroovyObject getProperty java.lang.String"
+    - "method groovy.lang.GroovyObject invokeMethod java.lang.String java.lang.Object"
+    - "method hudson.model.Actionable getActions"
     - "method hudson.model.PersistenceRoot getRootDir"
-    - "method hudson.model.Run getCause java.lang.Class"
+    - "method java.lang.Throwable getStackTrace"
     - "method java.net.URL getHost"
     - "method java.net.URL getPort"
     - "method java.net.URL getProtocol"
     - "method jenkins.model.Jenkins getItemByFullName java.lang.String"
+    - "method jenkins.plugins.git.AbstractGitSCMSource$SCMRevisionImpl getHash"
+    - "method jenkins.scm.api.SCMRevisionAction getRevision"
     - "method org.jenkinsci.plugins.workflow.steps.FlowInterruptedException getCauses"
     - "method org.jenkinsci.plugins.workflow.support.steps.build.RunWrapper getRawBuild"
+    - "new groovy.lang.Tuple2 java.lang.Object java.lang.Object"
+    - "new java.io.File java.lang.String"
     - "new java.net.URL java.lang.String java.lang.String int java.lang.String"
     - "staticMethod jenkins.model.Jenkins getInstance"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods drop java.lang.Object[]\
+      \ int"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods getAt java.lang.Object\
+      \ java.lang.String"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods putAt java.lang.Object\
+      \ java.lang.String java.lang.Object"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods size java.util.regex.Matcher"
+    - "staticField hudson.plugins.git.GitSCM GIT_COMMIT"
