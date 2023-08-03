@@ -1,4 +1,4 @@
-pipelineJob('default-development_snapsho') {
+pipelineJob('default-development_snapshot') {
     definition {
         cpsScm {
             lightweight(true)

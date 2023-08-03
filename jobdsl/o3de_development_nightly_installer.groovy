@@ -27,7 +27,6 @@ pipelineJob('O3DE-development_nightly-installer') {
         <tr><a href="https://o3debinaries.org/development/Latest/Linux/O3DE_latest.deb">https://o3debinaries.org/development/Latest/Linux/O3DE_latest.deb</a></tr>
         <tr><a href="https://o3debinaries.org/2.0.0/Linux/o3de_2.0.0_amd64.snap">https://o3debinaries.org/2.0.0/Linux/o3de_2.0.0_amd64.snap</a></tr>
     '''.stripIndent().trim())
-    displayName('O3DE [Nightly Installer] Development')
     logRotator {
         daysToKeep(7)
         numToKeep(14)
