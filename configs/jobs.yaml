@@ -10,8 +10,8 @@ jobs:
   - file: ${JENKINS_LOCAL}/jobdsl/o3de_periodic_incremental_daily.groovy
   - file: ${JENKINS_LOCAL}/jobdsl/o3de.groovy
   # Tools
-  - file: ${JENKINS_LOCAL}/jobdsldefault_development_snapshot.groovy
-  - file: ${JENKINS_LOCAL}/jobdslInstaller.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/default_development_snapshot.groovy
+  - file: ${JENKINS_LOCAL}/jobdsl/Installer.groovy
   - file: ${JENKINS_LOCAL}/jobdsl/mars_metrics.groovy
   - file: ${JENKINS_LOCAL}/jobdsl/override_pr_status_check.groovy
   - file: ${JENKINS_LOCAL}/jobdsl/validate_build_failure_rca.groovy
