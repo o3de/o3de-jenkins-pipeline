@@ -5,7 +5,7 @@ multibranchPipelineJob('MARS METRICS') {
                 github {
                     id('MARS-METRICS-GitHub')
                     configuredByUrl(false)
-                    credentialsId('github-access-token')
+                    credentialsId('o3de-ci-bot')
                     repoOwner('aws-lumberyard')
                     repository('o3de-mars')
                     repositoryUrl('https://github.com/aws-lumberyard/o3de-mars.git')

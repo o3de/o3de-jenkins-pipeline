@@ -12,7 +12,7 @@ pipelineJob('validate_build_failure_rca') {
                         }
                     }
                     remote {
-                        credentials('github-access-token')
+                        credentials('o3de-ci-bot')
                         url('https://github.com/aws-lumberyard/build-failure-rca.git')
                     }
                 }

@@ -12,7 +12,7 @@ pipelineJob('override-pr-status-check') {
                 ])
                 stage('Override PR Status Check') {
                     node('controller') {
-                        echo 'Overriding status check rule for ${env.PR_URL}'
+                        echo "Overriding status check rule for ${env.PR_URL}"
                         message_json = [
                             "pr_url": env.PR_URL,
                             "maintainer": currentBuild.rawBuild.getCause(Cause.UserIdCause).getUserId()
@@ -24,11 +24,14 @@ pipelineJob('override-pr-status-check') {
                         )
                     }
                 }
-            '''.stripIndent().trim())
+            ''')
         }
     }
     logRotator {
         daysToKeep(365)
+    }
+    parameters {
+        stringParam('PR_URL', '', 'URL of the PR to override status check rule')
     }
     properties {
         authorizationMatrix {
