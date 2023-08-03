@@ -5,14 +5,14 @@ unclassified:
     gerritTriggerEnabled: true
     globalEnabled: true
     knowledgeBase:
-    mongoDB:
-      dbName: "build-failure-rca"
-      enableStatistics: true
-      host: ${/jenkins/config/buildFailureDB/host}
-      password: ${/jenkins/config/buildFailureDB/password}
-      port: 27017
-      successfulLogging: false
-      userName: ${/jenkins/config/buildFailureDB/username}
+      mongoDB:
+        dbName: "build-failure-rca"
+        enableStatistics: true
+        host: ${/jenkins/config/buildFailureDB/host}
+        password: ${/jenkins/config/buildFailureDB/password}
+        port: 27017
+        successfulLogging: false
+        userName: ${/jenkins/config/buildFailureDB/username}
     maxLogSize: 0
     noCausesEnabled: true
     noCausesMessage: "No problems were identified. If you know why this problem occurred,\
