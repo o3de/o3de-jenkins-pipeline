@@ -63,6 +63,16 @@ multibranchPipelineJob('o3de-atom-sampleviewer') {
             numToKeep(14)
         }
     }
+    properties {
+        authorizationMatrix {
+            inheritanceStrategy {
+                inheriting()
+            }
+            permissions([
+                'USER:hudson.model.Item.Read:anonymous'
+            ])
+        }
+    }
     triggers {
         periodicFolderTrigger {
             interval('2m')

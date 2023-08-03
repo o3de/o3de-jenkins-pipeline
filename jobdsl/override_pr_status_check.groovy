@@ -37,13 +37,13 @@ pipelineJob('override-pr-status-check') {
         authorizationMatrix {
             inheritanceStrategy {
                 nonInheriting()
-                permissions([
-                    'GROUP:hudson.model.Item.Read:o3de',
-                    'GROUP:hudson.model.Item.Build:o3de*sig-chairs',
-                    'GROUP:hudson.model.Item.Configure:o3de*sig-chairs',
-                    'GROUP:hudson.model.Item.Read:o3de*sig-chairs'
-                ])
             }
+            permissions([
+                'GROUP:hudson.model.Item.Read:o3de',
+                'GROUP:hudson.model.Item.Build:o3de*sig-chairs',
+                'GROUP:hudson.model.Item.Configure:o3de*sig-chairs',
+                'GROUP:hudson.model.Item.Read:o3de*sig-chairs'
+            ])
         }
         disableConcurrentBuilds {
             abortPrevious(false)

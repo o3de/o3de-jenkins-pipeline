@@ -62,6 +62,16 @@ multibranchPipelineJob('o3de-netsoaktest') {
             numToKeep(28)
         }
     }
+    properties {
+        authorizationMatrix {
+            inheritanceStrategy {
+                inheriting()
+            }
+            permissions([
+                'USER:hudson.model.Item.Read:anonymous'
+            ])
+        }
+    }
     triggers {
         periodicFolderTrigger {
             interval('2m')

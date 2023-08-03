@@ -42,4 +42,14 @@ multibranchPipelineJob('O3DE_periodic-incremental-daily') {
             numToKeep(14)
         }
     }
+    properties {
+        authorizationMatrix {
+            inheritanceStrategy {
+                inheriting()
+            }
+            permissions([
+                'USER:hudson.model.Item.Read:anonymous'
+            ])
+        }
+    }
 }

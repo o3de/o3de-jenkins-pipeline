@@ -76,6 +76,16 @@ multibranchPipelineJob('o3de-extras') {
             numToKeep(14)
         }
     }
+    properties {
+        authorizationMatrix {
+            inheritanceStrategy {
+                inheriting()
+            }
+            permissions([
+                'USER:hudson.model.Item.Read:anonymous'
+            ])
+        }
+    }
     triggers {
         periodicFolderTrigger {
             interval('2m')
