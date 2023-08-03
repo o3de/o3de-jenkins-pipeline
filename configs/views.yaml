@@ -29,11 +29,8 @@ jenkins:
       jobNames:
       - "default-development_snapshot"
       - "Installer"
-      - "LFS"
       - "MARS Metrics"
       - "O3DE-development_nightly-installer"
-      - "O3DE-hotfix_23.05.1_nightly-installer"
-      - "O3DE-Main_nightly-installer"
       - "O3DE-test_nightly-installer"
       - "override-pr-status-check"
       - "periodic-incremental-daily-development-trigger"
