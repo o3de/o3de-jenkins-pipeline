@@ -28,17 +28,6 @@ multibranchPipelineJob('O3DE-Example') {
                             triggeredBranchesRegex('^$')
                         }
                     }
-                    namedExceptions {
-                        named {
-                            name('main')
-                        }
-                        named {
-                            name('development')
-                        }
-                        named {
-                            name('stabilization/*')
-                        }
-                    }
                 }
             }
         }
@@ -54,11 +43,6 @@ multibranchPipelineJob('O3DE-Example') {
         discardOldItems {
             daysToKeep(7)
             numToKeep(14)
-        }
-    }
-    triggers {
-        periodicFolderTrigger {
-            interval('5m')
         }
     }
 }
