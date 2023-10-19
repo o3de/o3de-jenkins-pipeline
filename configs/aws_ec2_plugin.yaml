@@ -643,7 +643,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-0c169196f4a990b3e"
+      - ami: "ami-00e9cadd4c5aae19a"
         amiType:
           unixData:
             sshPort: "22"
