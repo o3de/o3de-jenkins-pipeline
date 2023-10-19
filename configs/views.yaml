@@ -13,7 +13,6 @@ jenkins:
       - "O3DE"
       - "O3DE-development_nightly-installer"
       - "o3de-extras/development"
-      - "o3de-netsoaktest/development"
       - "O3DE/development"
       - "O3DE/main"
       - "O3DE_periodic-incremental-daily/development"

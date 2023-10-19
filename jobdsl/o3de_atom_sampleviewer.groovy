@@ -54,7 +54,7 @@ multibranchPipelineJob('o3de-atom-sampleviewer') {
     displayName('Atom SampleViewer')
     factory {
         workflowBranchProjectFactory {
-            scriptPath('Scripts/build/Jenkins/Jenkinsfile')
+            scriptPath('scripts/build/Jenkins/Jenkinsfile')
         }
     }
     orphanedItemStrategy {
