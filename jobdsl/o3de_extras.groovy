@@ -85,12 +85,17 @@ multibranchPipelineJob('o3de-extras') {
     }
     properties {
         authorizationMatrix {
+            entries{
+                user{
+                    name('anonymous')
+                    permissions([
+                        'Job/Read'
+                    ])
+                }
+            }
             inheritanceStrategy {
                 inheriting()
             }
-            permissions([
-                'USER:hudson.model.Item.Read:anonymous'
-            ])
         }
     }
     triggers {

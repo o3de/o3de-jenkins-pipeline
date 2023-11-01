@@ -44,12 +44,17 @@ multibranchPipelineJob('O3DE_periodic-incremental-daily') {
     }
     properties {
         authorizationMatrix {
+            entries{
+                user{
+                    name('anonymous')
+                    permissions([
+                        'Job/Read'
+                    ])
+                }
+            }
             inheritanceStrategy {
                 inheriting()
             }
-            permissions([
-                'USER:hudson.model.Item.Read:anonymous'
-            ])
         }
     }
 }
