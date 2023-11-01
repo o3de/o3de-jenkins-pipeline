@@ -35,15 +35,25 @@ pipelineJob('override-pr-status-check') {
     }
     properties {
         authorizationMatrix {
+            entries{
+                group{
+                    name('o3de')
+                    permissions([
+                        'Job/Read'
+                    ])
+                }
+                group{
+                    name('o3de*sig-chairs')
+                    permissions([
+                        'Job/Build',
+                        'Job/Configure',
+                        'Job/Read'
+                    ])
+                }
+            }
             inheritanceStrategy {
                 nonInheriting()
             }
-            permissions([
-                'GROUP:hudson.model.Item.Read:o3de',
-                'GROUP:hudson.model.Item.Build:o3de*sig-chairs',
-                'GROUP:hudson.model.Item.Configure:o3de*sig-chairs',
-                'GROUP:hudson.model.Item.Read:o3de*sig-chairs'
-            ])
         }
         disableConcurrentBuilds {
             abortPrevious(false)

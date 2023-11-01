@@ -37,28 +37,33 @@ pipelineJob('Installer/Start_CloudHSM') {
     }
     properties {
         authorizationMatrix {
+            entries{
+                group{
+                    name('o3de*aws-ops')
+                    permissions([
+                        'Credentials/Create',
+                        'Credentials/Delete',
+                        'Credentials/ManageDomains',
+                        'Credentials/Update',
+                        'Credentials/View',
+                        'Job/Build',
+                        'Job/Cancel',
+                        'Job/Configure',
+                        'Job/Delete',
+                        'Job/Discover',
+                        'Job/Move',
+                        'Job/Read',
+                        'Job/Workspace',
+                        'Run/Delete',
+                        'Run/Replay',
+                        'Run/Update',
+                        'SCM/Tag'
+                    ])
+                }
+            }
             inheritanceStrategy {
                 nonInheriting()
             }
-            permissions([
-                'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Create:o3de*aws-ops',
-                'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Delete:o3de*aws-ops',
-                'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:o3de*aws-ops',
-                'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Update:o3de*aws-ops',
-                'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.View:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Build:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Cancel:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Configure:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Delete:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Discover:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Move:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Read:o3de*aws-ops',
-                'GROUP:hudson.model.Item.Workspace:o3de*aws-ops',
-                'GROUP:hudson.model.Run.Delete:o3de*aws-ops',
-                'GROUP:hudson.model.Run.Replay:o3de*aws-ops',
-                'GROUP:hudson.model.Run.Update:o3de*aws-ops',
-                'GROUP:hudson.scm.SCM.Tag:o3de*aws-ops'
-            ])
         }
         disableConcurrentBuilds {
             abortPrevious(false)
@@ -114,27 +119,32 @@ pipelineJob('Installer/Start_CloudHSM_Manual') {
     }
     properties {
         authorizationMatrix {
+            entries{
+                group{
+                    name('o3de*aws-ops')
+                    permissions([
+                        'Credentials/Create',
+                        'Credentials/Delete',
+                        'Credentials/ManageDomains',
+                        'Credentials/Update',
+                        'Credentials/View',
+                        'Job/Build',
+                        'Job/Cancel',
+                        'Job/Configure',
+                        'Job/Delete',
+                        'Job/Discover',
+                        'Job/Move',
+                        'Job/Read',
+                        'Job/Workspace',
+                        'Run/Delete',
+                        'Run/Replay',
+                        'Run/Update',
+                        'SCM/Tag'
+                    ])
+                }
+            }
             inheritanceStrategy {
                 nonInheriting()
-                permissions([
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Create:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Delete:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Update:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.View:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Build:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Cancel:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Configure:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Delete:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Discover:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Move:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Read:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Workspace:o3de*aws-ops',
-                    'GROUP:hudson.model.Run.Delete:o3de*aws-ops',
-                    'GROUP:hudson.model.Run.Replay:o3de*aws-ops',
-                    'GROUP:hudson.model.Run.Update:o3de*aws-ops',
-                    'GROUP:hudson.scm.SCM.Tag:o3de*aws-ops'
-                ])
             }
         }
         disableConcurrentBuilds {
@@ -173,27 +183,32 @@ pipelineJob('Installer/Stop_CloudHSM') {
     }
     properties {
         authorizationMatrix {
+            entries{
+                group{
+                    name('o3de*aws-ops')
+                    permissions([
+                        'Credentials/Create',
+                        'Credentials/Delete',
+                        'Credentials/ManageDomains',
+                        'Credentials/Update',
+                        'Credentials/View',
+                        'Job/Build',
+                        'Job/Cancel',
+                        'Job/Configure',
+                        'Job/Delete',
+                        'Job/Discover',
+                        'Job/Move',
+                        'Job/Read',
+                        'Job/Workspace',
+                        'Run/Delete',
+                        'Run/Replay',
+                        'Run/Update',
+                        'SCM/Tag'
+                    ])
+                }
+            }
             inheritanceStrategy {
                 nonInheriting()
-                permissions([
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Create:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Delete:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.ManageDomains:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.Update:o3de*aws-ops',
-                    'GROUP:com.cloudbees.plugins.credentials.CredentialsProvider.View:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Build:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Cancel:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Configure:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Delete:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Discover:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Move:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Read:o3de*aws-ops',
-                    'GROUP:hudson.model.Item.Workspace:o3de*aws-ops',
-                    'GROUP:hudson.model.Run.Delete:o3de*aws-ops',
-                    'GROUP:hudson.model.Run.Replay:o3de*aws-ops',
-                    'GROUP:hudson.model.Run.Update:o3de*aws-ops',
-                    'GROUP:hudson.scm.SCM.Tag:o3de*aws-ops'
-                ])
             }
         }
         disableConcurrentBuilds {
