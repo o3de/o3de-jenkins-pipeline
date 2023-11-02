@@ -73,18 +73,14 @@ class JenkinsServerStack(Stack):
     
     def _create_vpc(self):
         """Create a new VPC or use an existing one if a VPC ID is provided."""
-        if self.node.try_get_context('vpc-id'):
-            return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.node.try_get_context('vpc-id'))
-
-        if self.stack_tags.get('vpc-id', 'None') != 'None':  # Tag values from pipeline will be converted to string and cannot be empty during synth
-            return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.stack_tags.get('vpc-id'))
-
-        vpc = ec2.Vpc(self, 'VPC',
-            cidr=self.stack_config['vpc']['cidr'],
-            nat_gateways=self.stack_config['vpc']['nat_gateways']
-        )
-        vpc.add_flow_log("JenkinsVPCFlowLog")
-        return vpc
+        if self.stack_tags.get('vpc-id', 'None') == 'None':  # Tag values from pipeline will be converted to string and cannot be empty during synth
+            vpc = ec2.Vpc(self, 'VPC',
+                cidr=self.stack_config['vpc']['cidr'],
+                nat_gateways=self.stack_config['vpc']['nat_gateways']
+            )
+            vpc.add_flow_log("JenkinsVPCFlowLog")
+            return vpc
+        return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.stack_tags.get('vpc-id'))
 
     def _create_efs(self):
         """Create a file system with an access point for the jenkins home directory."""
