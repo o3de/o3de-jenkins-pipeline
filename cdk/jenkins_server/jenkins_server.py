@@ -13,12 +13,14 @@ import aws_cdk.aws_ecr_assets as ecr_assets
 import aws_cdk.aws_efs as efs
 import aws_cdk.aws_elasticloadbalancingv2 as elb
 import aws_cdk.aws_iam as iam
+import aws_cdk.aws_kms as kms
 import aws_cdk.aws_logs as logs
 import aws_cdk.aws_sns as sns
 import aws_cdk.aws_s3 as s3
 
 from os import path
 from aws_cdk import Stack
+from cdk_nag import NagSuppressions
 from constructs import Construct
 
 
@@ -43,11 +45,13 @@ class JenkinsServerStack(Stack):
         self.cert_arn = self._load_cert_arn()
 
         self.vpc = self._create_vpc()
-        self.build_topic = sns.Topic(self, 'BuildTopic')
+        self.build_topic = sns.Topic(self, 'BuildTopic', master_key=kms.Key(self, "SNSKey", enable_key_rotation=True))
         self.log_group = logs.LogGroup(self, 'LogGroup')
         self.file_system, self.access_point = self._create_efs()
         self.fargate_service = self._create_ecs()
         self._create_alb()
+        self._add_nag_suppressions()
+        
 
     def _load_stack_config(self, config_file):
         """Load stack config. The config file is expected to be in the same directory."""
@@ -69,12 +73,14 @@ class JenkinsServerStack(Stack):
     
     def _create_vpc(self):
         """Create a new VPC or use an existing one if a VPC ID is provided."""
-        if self.stack_tags['vpc-id'] == 'None':  # Context values will be converted to string and cannot be empty during synth
-            return ec2.Vpc(self, 'VPC',
+        if self.stack_tags.get('vpc-id', 'None') == 'None':  # Tag values from pipeline will be converted to string and cannot be empty during synth
+            vpc = ec2.Vpc(self, 'VPC',
                 cidr=self.stack_config['vpc']['cidr'],
                 nat_gateways=self.stack_config['vpc']['nat_gateways']
             )
-        return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.stack_tags['vpc-id'])
+            vpc.add_flow_log("JenkinsVPCFlowLog")
+            return vpc
+        return ec2.Vpc.from_lookup(self, 'VPC', vpc_id=self.stack_tags.get('vpc-id'))
 
     def _create_efs(self):
         """Create a file system with an access point for the jenkins home directory."""
@@ -216,7 +222,8 @@ class JenkinsServerStack(Stack):
         alb.log_access_logs(
             s3.Bucket(self, 'AccessLogsBucket',
                 block_public_access=s3.BlockPublicAccess.BLOCK_ALL,
-                encryption=s3.BucketEncryption.S3_MANAGED
+                encryption=s3.BucketEncryption.S3_MANAGED,
+                enforce_ssl=True
             )
         )
 
@@ -225,3 +232,21 @@ class JenkinsServerStack(Stack):
 
         if alb_config['public'] is True:
             alb.connections.allow_from_any_ipv4(ec2.Port.tcp(443))
+
+    def _add_nag_suppressions(self):
+        '''Add cdk-nag suppressions for the Jenkins server stack.'''
+        suppression_list = [
+            {
+                'id': 'AwsSolutions-IAM5',
+                'reason': 'Wildcard permissions required to allow pulling user added Jenkins configs from parameter store.'
+            },
+            {
+                'id': 'AwsSolutions-EC23',
+                'reason': 'Allows enabling public access to server. Additional IP based security will be setup through WAF.'
+            },
+            {
+                'id': 'AwsSolutions-S1',
+                'reason': 'Access logs bucket does not need access logging enabled.'
+            }
+        ]
+        NagSuppressions.add_stack_suppressions(self, suppression_list)

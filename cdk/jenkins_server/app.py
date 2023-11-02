@@ -10,6 +10,7 @@ import os
 import sys
 import aws_cdk as cdk
 
+from cdk_nag import AwsSolutionsChecks
 from jenkins_server import JenkinsServerStack
 
 # Account and region set by the default AWS profile or one specified with --profile
@@ -17,6 +18,7 @@ ACCOUNT = os.environ.get('CDK_DEFAULT_ACCOUNT')
 REGION = os.environ.get('CDK_DEFAULT_REGION')
 
 app = cdk.App()
+cdk.Aspects.of(app).add(AwsSolutionsChecks(verbose=True))
 
 try:
     JenkinsServerStack(app, 'JenkinsServerStack',
