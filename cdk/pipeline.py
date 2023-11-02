@@ -11,6 +11,7 @@ import aws_cdk.aws_iam as iam
 import aws_cdk.pipelines as pipelines
 
 from aws_cdk import Environment, Stack, Stage
+from cdk_nag import NagSuppressions
 from constructs import Construct
 from jenkins_server.jenkins_server import JenkinsServerStack
 
@@ -50,6 +51,7 @@ class JenkinsPipeline(Stack):
         self.source = pipelines.CodePipelineSource.connection(self.repo, self.branch, connection_arn=self.codestar_connection)
 
         self._create_pipeline()
+        self._add_nag_suppressions()
 
     def _get_required_context(self, context_name):
         """Get context value and raise an exception if it does not exist."""
@@ -119,3 +121,30 @@ class JenkinsPipeline(Stack):
                 pipelines.ManualApprovalStep('ReleaseToProd')
             ]
         )
+
+    def _add_nag_suppressions(self):
+        '''Add cdk-nag suppressions for the pipeline stack. 
+        
+        The CDK Pipeline library generates internal constructs that are not defined here but may be generate rule violations
+        for cdk-nag. Adding suppressions at stack level to avoid errors. 
+
+        '''
+        suppression_list = [
+            {
+                'id': 'AwsSolutions-S1',
+                'reason': 'CDK Pipeline generates its own S3 buckets for pipeline assets.'
+            },
+            {
+                'id': 'AwsSolutions-IAM5',
+                'reason': 'CDK Pipeline generates its own IAM permissions.'
+            },
+            {
+                'id': 'AwsSolutions-CB3',
+                'reason': 'CDK Pipeline requires privileged mode for its CodeBuild project to build docker images.'
+            },
+            {
+                'id': 'AwsSolutions-CB4',
+                'reason': 'CDK Pipeline generates its own CodeBuild project for pipeline assets.'
+            }
+        ]
+        NagSuppressions.add_stack_suppressions(self, suppression_list)
