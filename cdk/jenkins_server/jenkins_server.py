@@ -239,39 +239,18 @@ class JenkinsServerStack(Stack):
 
     def _add_nag_suppressions(self):
         '''Add cdk-nag suppressions for the Jenkins server stack.'''
-        NagSuppressions.add_resource_suppressions_by_path(self, 
-            '/JenkinsServerStack/TaskDef/TaskRole/DefaultPolicy/Resource', 
-            [
-                {
-                    'id': 'AwsSolutions-IAM5',
-                    'reason': 'Wildcard permissions required to allow pulling user added Jenkins configs from parameter store.'
-                }
-            ]
-            )
-        NagSuppressions.add_resource_suppressions_by_path(self, 
-            '/JenkinsServerStack/TaskDef/ExecutionRole/DefaultPolicy/Resource',
-            [
-                {
-                    'id': 'AwsSolutions-IAM5',
-                    'reason': 'Execution role automatically created by ECS to pull images from ECR.'
-                }
-            ] 
-        )
-        NagSuppressions.add_resource_suppressions_by_path(self, 
-            '/JenkinsServerStack/ALB/SecurityGroup/Resource',
-            [
-                {
-                    'id': 'AwsSolutions-EC23',
-                    'reason': 'Allows enabling public access to server. Additional IP based security will be setup through WAF.'
-                }
-            ] 
-        )
-        NagSuppressions.add_resource_suppressions_by_path(self, 
-            '/JenkinsServerStack/AccessLogsBucket/Resource',
-            [
-                {
-                    'id': 'AwsSolutions-S1',
-                    'reason': 'This is the access logs bucket resource.'
-                }
-            ] 
-        )
+        suppression_list = [
+            {
+                'id': 'AwsSolutions-IAM5',
+                'reason': 'Wildcard permissions required to allow pulling user added Jenkins configs from parameter store.'
+            },
+            {
+                'id': 'AwsSolutions-EC23',
+                'reason': 'Allows enabling public access to server. Additional IP based security will be setup through WAF.'
+            },
+            {
+                'id': 'AwsSolutions-S1',
+                'reason': 'Access logs bucket does not need access logging enabled.'
+            }
+        ]
+        NagSuppressions.add_stack_suppressions(self, suppression_list)
