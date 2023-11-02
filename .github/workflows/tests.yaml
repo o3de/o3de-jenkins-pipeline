@@ -13,10 +13,37 @@ jobs:
       - name: Set up Python 3
         uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.11'
       - name: Install dependencies
         run: |
           pip install -r requirements.txt
       - name: Run Pytest
         run: |
           python -m pytest -v
+  cdk_nag:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: cdk
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python 3
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Setup test environment
+        run: |
+          export CDK_DEFAULT_ACCOUNT=012345678912
+          export CDK_DEFAULT_REGION=us-west-2
+          cp tests/cdk.context.json .
+      - name: Synth pipeline and jenkins server stacks
+        run: |
+          cdk synth \
+            --context codestar-connection=arn:aws:codestar-connections/connection_id \
+            --context repo=org/repo \
+            --context branch=branch \
+            --context cert-arn=arn:aws:acm:certificate/certificate_id
+          cdk synth --app "python jenkins_server/app.py" --context cert-arn=arn:aws:acm:certificate/certificate_id --no-lookups
