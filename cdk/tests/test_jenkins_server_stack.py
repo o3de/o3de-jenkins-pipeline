@@ -47,7 +47,7 @@ def test_stack_context_values(template):
 def test_required_resources(template):
     template.resource_count_is("AWS::EC2::VPC", 1)
     template.resource_count_is("AWS::SNS::Topic", 1)
-    template.resource_count_is("AWS::Logs::LogGroup", 1)
+    template.resource_count_is("AWS::Logs::LogGroup", 2)
     template.resource_count_is("AWS::EFS::FileSystem", 1)
     template.resource_count_is("AWS::EFS::AccessPoint", 1)
     template.resource_count_is("AWS::ECS::Cluster", 1)
