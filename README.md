@@ -21,7 +21,7 @@ Jenkins is configured using the JCasC plugin. This allows the settings to be def
 
 These files should be located in the `configs` directory so that they are found by the plugin.. There is a main `jenkins.yaml` file that contains the recommended default settings. You can customize your Jenkins setup by editing this file. 
 
-There are also template files that can be used for other optional settings. The plugin also supports having multiple yaml files and will locate all files having the .yml/.yaml extention.
+There are also template files that can be used for other optional settings. The plugin also supports having multiple yaml files and will locate all files having the .yml/.yaml extension.
 
 ## Job DSL
 
@@ -46,7 +46,7 @@ jobs:
   - file: ${JENKINS_LOCAL}/jobdsl/job2.groovy
 ```
 
-Note: The `jobdsl` directroy is copied into $JENKINS_LOCAL when the docker image is created.
+Note: The `jobdsl` directory is copied into $JENKINS_LOCAL when the docker image is created.
 
 To get started the basic Job DSL API reference can be found here: https://jenkinsci.github.io/job-dsl-plugin/ The complete API reference which includes all installed plugins can be found on your Jenkins server: `$JENKINS_URL/plugin/job-dsl/api-viewer/index.html`
 
@@ -87,7 +87,8 @@ Requirements:
 Docker Container Setup:
 1. Clone the repo and `cd` into the repo root
 2. Build the docker image: `docker build -t jenkins .`
-3. Run the docker image: `docker run -d -p 8080:8080 jenkins`
+3. Create a volume to store the JENKINS_HOME directory.
+3. Run the docker image: `docker run -d -p 8080:8080 --mount type=volume,target=/var/jenkins_home,source=<volume-name> jenkins`
 
 After the Jenkins service starts up, go to `http://HOST:8080`
 
@@ -95,21 +96,14 @@ After the Jenkins service starts up, go to `http://HOST:8080`
 
 ### AWS
 
-CDK Pipelines is used to automatically build the docker image and deploy a stack to host the container in ECS.
-
-The pipeline has the following stages:
-- Source: Triggers the pipeline when changes are merged into the target branch.
-- UpdatePipeline: Allows the pipeline to self-update.
-- Assets: Creates the docker image and stores it in an Elastic Container Registry (ECR) repo for the deploy stages.
-- Staging: Deploys the staging instance if a staging certificate is provided.
-- Prod: Deploys the prod instance. 
+CDK Pipelines is used to automatically build the docker image and deploy a stack to host the container in ECS. The pipeline is self-mutating and allows developers to completely manage the pipeline from the git repo after performing the initial bootstrapping step. 
 
 #### Stacks
 
 | Stack | Path | Description |
 | ------- | --- | ------ |
-| Pipeline | cdk | Automates the deployment of the Jenkins server. This stack only needs to be bootstrapped and deployed once by the user. All further deployments and updates to the pipeline will be automated. |
-| Jenkins Server | cdk/jenkins_server | This stack is configured to host the Jenkins service in ECS/Fargate. This can be deployed through the pipeline or through a manual stand-alone deployment. | 
+| CDK Pipeline | cdk | Automates the deployment of the Jenkins server. This stack only needs to be bootstrapped and deployed once by the user. All further deployments and updates to the pipeline will be automated. |
+| Jenkins Server | cdk/jenkins_server | This stack is configured to host the Jenkins service in ECS/Fargate. | 
 
 #### Requirements:
 
@@ -139,25 +133,22 @@ This allows AWS services to connect to third-party repos.
 
 #### Deployment Steps:
 
-1. Clone the repo then navigate to the CDK directory. Perform a one-time bootstrap step for each AWS account/region you'll deploy this pipeline.
-    - Use` --profile` to use a named config
+1.  Perform a one-time bootstrap step in the AWS account/region you'll deploy this pipeline.
+    - For more info on bootstrapping see: https://docs.aws.amazon.com/cdk/v2/guide/bootstrapping.html 
 ```
-cd cdk
-aws cloudformation create-stack --stack-name CDKToolkit --template-body file://bootstrap-template.yaml --capabilities CAPABILITY_NAMED_IAM
+cdk bootstrap aws://<accountid>/<region>
 ```
 
-> :warning: The bootstrap template contains IAM policies that will be assumed by CloudFormation which are required to deploy the CDK stacks. If you have already bootstrapped this account/region for existing CDK stacks, you'll need to merge this template then run `aws cloudformation update-stack`. The policies can be found under the `CloudFormationExecutionRole:` resource. You can also skip this step if your existing CloudFormation execution policy already includes the permissions defined here or if you have granted it full permissions. 
-
-2. Create a target branch for deployments
+2. Create a fork of this repo and create a target branch for deployments. 
 3. Add your configs
     - Update `cdk/cdk.context.json` with the required context values (alternatively you can provide these values using `--context` when running `cdk deploy`)
     - Update `configs/jenkins.yaml` and provide the require values for the GitHub client ID and secret. Also add additional config files if required. See **Jenkins Configuration** section above.
-    > :warning: Do not commit secrets to the repo. Store secrets in AWS Parameter Store and enter the parameter names instead. For other options see: https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/docs/features/secrets.adoc 
-4. Push these changes to your repo/branch used for deployments
+    > :warning: Do not commit secrets to the repo. Store secrets in AWS Parameter Store and enter the parameter names instead (e.g. `${parameter-name}`). For other options see: https://github.com/jenkinsci/configuration-as-code-plugin/blob/master/docs/features/secrets.adoc 
+4. Push these changes to your branch used for deployments
 5. Deploy: This is a one-time manual deployment. Further updates will be deployed through the CDK pipeline. Follow the steps in the **CDK Deployment Steps** section below.
 
 #### CDK Deployment Steps
-Run these steps within the cdk directoy.
+Run these steps within the cdk directory.
 1. Recommended: Create a virtualenv
 
 ```
@@ -174,7 +165,7 @@ source .venv/bin/activate
 .venv\Scripts\activate.bat
 ```
 
-3. Install the required dependenciies
+3. Install the required dependencies
 ```
 pip install -r requirements.txt
 ```
@@ -186,11 +177,18 @@ pip install -r requirements.txt
 > :warning: Review the items listed under `IAM Statement Changes` prior to confirming and deploying the CDK stack. During the bootstrap step CloudFormation was granted IAM permissions required to create and assign roles for deployments. Pay attention to this section especially if you've customized the IAM permissions in the stack. 
 
 ```
+cd cdk
 cdk deploy
+```
+Example cdk deploy command with context values:
+```
+cdk deploy --context codestar-connection=arn:aws:codestar-connections:us-west-2:123456789012:connection/abcd-efgh-1234-5678 --context repo=o3de/o3de-jenkins-pipeline --context branch=prod --context cert-arn=arn:aws:acm:us-west-2:123456789012:certificate/abcd-efgh-1234-5678
 ```
 
 #### Deploying Updates
 
 Further updates to the CDK Pipeline or the Jenkins config will be made by merging in commits to the target branch configured earlier. 
+
+Additional info on Jenkins deployments, including troubleshooting steps, can be found here: [Jenkins Deployment Guide](https://github.com/o3de/sig-build/blob/main/AutomatedReview/JenkinsDeploymentGuide.md)
 
 > **Recommended:** Set branch protection on your target branch to require pull request approvals before deploying changes. 
