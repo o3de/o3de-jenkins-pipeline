@@ -89,7 +89,8 @@ class JenkinsServerStack(Stack):
         file_system = efs.FileSystem(self, 'FileSystem',
             vpc=self.vpc,
             enable_automatic_backups=True,
-            encrypted=True
+            encrypted=True,
+            throughput_mode=efs.ThroughputMode.ELASTIC
         )
 
         access_point = file_system.add_access_point('AccessPoint',
