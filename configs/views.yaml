@@ -28,7 +28,6 @@ jenkins:
       jobNames:
       - "default-development_snapshot"
       - "Installer"
-      - "MARS Metrics"
       - "O3DE-development_nightly-installer"
       - "O3DE-test_nightly-installer"
       - "override-pr-status-check"
