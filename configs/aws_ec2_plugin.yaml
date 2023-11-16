@@ -89,49 +89,6 @@ jenkins:
         type: C54xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-07e0caede54ba0c81"
-        amiType:
-          unixData:
-            sshPort: "22"
-        associatePublicIp: false
-        connectBySSHProcess: false
-        connectionStrategy: PRIVATE_IP
-        deleteRootOnTermination: false
-        description: "MARS_PUBLISH_1"
-        ebsEncryptRootVolume: ENCRYPTED
-        ebsOptimized: true
-        hostKeyVerificationStrategy: ACCEPT_NEW
-        iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
-        idleTerminationMinutes: "30"
-        instanceCapStr: "1"
-        labelString: "metrics"
-        launchTimeoutStr: "300"
-        maxTotalUses: -1
-        metadataEndpointEnabled: true
-        metadataHopsLimit: 1
-        metadataTokensRequired: false
-        minimumNumberOfInstances: 0
-        minimumNumberOfSpareInstances: 0
-        mode: EXCLUSIVE
-        monitoring: false
-        numExecutors: 1
-        remoteAdmin: "lybuilder"
-        remoteFS: "/home/lybuilder/ly"
-        securityGroups: "sg-0551df0efb1ca5476"
-        stopOnTerminate: true
-        subnetId: "subnet-c111be8b"
-        t2Unlimited: false
-        tags:
-        - name: "Name"
-          value: "MARS_PUBLISH_1"
-        tenancy: Default
-        type: C5aLarge
-        useEphemeralDevices: false
-        userData: |-
-          #!/bin/bash
-          sudo systemctl enable filebeat-prod filebeat-sandbox
-          sudo systemctl start filebeat-prod filebeat-sandbox
-        zone: "us-west-2a"
       - ami: "ami-0a3584277984128ca"
         amiType:
           unixData:
