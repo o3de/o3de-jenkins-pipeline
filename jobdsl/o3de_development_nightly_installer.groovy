@@ -24,8 +24,8 @@ pipelineJob('O3DE-development_nightly-installer') {
         Outputs to S3/Cloudfront address: 
 
         <tr><a href="https://o3debinaries.org/development/Latest/Windows/o3de_installer.exe">https://o3debinaries.org/development/Latest/Windows/o3de_installer.exe</a></tr>
-        <tr><a href="https://o3debinaries.org/development/Latest/Linux/O3DE_latest.deb">https://o3debinaries.org/development/Latest/Linux/O3DE_latest.deb</a></tr>
-        <tr><a href="https://o3debinaries.org/2.0.0/Linux/o3de_2.0.0_amd64.snap">https://o3debinaries.org/2.0.0/Linux/o3de_2.0.0_amd64.snap</a></tr>
+        <tr><a href="https://o3debinaries.org/development/Latest/Linux/o3de_latest.deb">https://o3debinaries.org/development/Latest/Linux/o3de_latest.deb</a></tr>
+        <tr><a href="https://o3debinaries.org/4.2.0/Linux/o3de_4.2.0_amd64.snap">https://o3debinaries.org/4.2.0/Linux/o3de_4.2.0_amd64.snap</a></tr>
     '''.stripIndent().trim())
     logRotator {
         daysToKeep(7)

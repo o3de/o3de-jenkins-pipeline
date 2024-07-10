@@ -21,6 +21,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "linux"
         launchTimeoutStr: "300"
         maxTotalUses: 1
@@ -65,6 +66,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         launchTimeoutStr: "600"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -103,6 +105,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "windows-packaging-disable windows-installer-test-disable"
         launchTimeoutStr: "600"
         maxTotalUses: -1
@@ -142,6 +145,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         launchTimeoutStr: "600"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -180,6 +184,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "linux-707531fc7"
         launchTimeoutStr: "300"
         maxTotalUses: 1
@@ -233,6 +238,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "linux-test linux-674ae1"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -274,6 +280,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         launchTimeoutStr: "300"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -336,6 +343,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "300"
+        javaPath: "java"
         labelString: "windows-packaging-test-1"
         launchTimeoutStr: "600"
         maxTotalUses: 1
@@ -375,6 +383,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "linux-707531fc7-packaging ubuntu-20-packaging"
         launchTimeoutStr: "300"
         maxTotalUses: 1
@@ -396,7 +405,7 @@ jenkins:
         - name: "Name"
           value: "Signing_UBUNTU20_BLD_3"
         tenancy: Default
-        type: C5a4xlarge
+        type: C6a4xlarge
         useEphemeralDevices: false
         userData: "#!/bin/bash\nsed -i /etc/hosts -e \"s/^127.0.0.1 localhost$/127.0.0.1\
           \ localhost $(hostname)/\" \necho 'export ENV_3RDPARTY_PATH=/home/lybuilder/ly/workspace/3rdParty'\
@@ -418,7 +427,7 @@ jenkins:
           \ text)\nexec /usr/bin/dpkg-sig-cmd -g \"--pinentry-mode loopback --passphrase\
           \ $pass\" \"$@\"\nEOT\n\nchmod 755 /usr/bin/dpkg-sig"
         zone: "us-west-2a"
-      - ami: "ami-0b0ba32866c0def91"
+      - ami: "ami-0c3a789b6de3d955f"
         amiType:
           unixData:
             sshPort: "22"
@@ -426,13 +435,14 @@ jenkins:
         connectBySSHProcess: false
         connectionStrategy: PRIVATE_IP
         deleteRootOnTermination: false
-        description: "Signing_WIN2019_INC_4"
+        description: "Signing_WIN2022_INC_1"
         ebsEncryptRootVolume: ENCRYPTED
         ebsOptimized: true
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
-        labelString: "windows-packaging windows-installer-test"
+        javaPath: "java"
+        labelString: "windows-packaging"
         launchTimeoutStr: "600"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -453,8 +463,8 @@ jenkins:
         - name: "Name"
           value: "Signing_WIN2019_INC_4"
         tenancy: Default
-        tmpDir: "$(cygpath -w /cygdrive/c/ly)"
-        type: C5a4xlarge
+        tmpDir: "c:\\\\ly"
+        type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
       - ami: "ami-00cd01aeb5a4d5b9d"
@@ -471,6 +481,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "ubuntu-22-packaging"
         launchTimeoutStr: "300"
         maxTotalUses: 1
@@ -536,6 +547,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "windows-8fe4037c windows-b3c8994f1 windows-a4a28adb2"
         launchTimeoutStr: "600"
         maxTotalUses: 1
@@ -558,7 +570,7 @@ jenkins:
           value: "WIN2019_INC_4"
         tenancy: Default
         tmpDir: "$(cygpath -w /cygdrive/c/ly)"
-        type: C5a4xlarge
+        type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
       - ami: "ami-098b8388923c3abb9"
@@ -575,6 +587,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "windows-vs2022"
         launchTimeoutStr: "600"
         maxTotalUses: 1
@@ -600,7 +613,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-00e9cadd4c5aae19a"
+      - ami: "ami-0204ce8bc318f3cb9"
         amiType:
           unixData:
             sshPort: "22"
@@ -614,7 +627,8 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
-        labelString: "windows-latest"
+        javaPath: "java"
+        labelString: "windows-latest windows-installer-test"
         launchTimeoutStr: "600"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -645,7 +659,7 @@ jenkins:
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
-      - ami: "ami-0cc5f9d0b6dd8e982"
+      - ami: "ami-0b0888f13e67db983"
         amiType:
           unixData:
             sshPort: "22"
@@ -659,6 +673,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "30"
+        javaPath: "java"
         labelString: "linux-3234e23c linux-7cb44cc9e"
         launchTimeoutStr: "300"
         maxTotalUses: 1
@@ -685,7 +700,7 @@ jenkins:
         - name: "Name"
           value: "UBUNTU20_BLD_3-PR"
         tenancy: Default
-        type: C44xlarge
+        type: C6a4xlarge
         useEphemeralDevices: false
         userData: "#!/bin/bash\nsed -i /etc/hosts -e \"s/^127.0.0.1 localhost$/127.0.0.1\
           \ localhost $(hostname)/\" \necho 'export ENV_3RDPARTY_PATH=/home/lybuilder/ly/workspace/3rdParty'\
@@ -717,6 +732,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "300"
+        javaPath: "java"
         labelString: "linux-7058deb8-test linux-ubuntu-22"
         maxTotalUses: 1
         metadataEndpointEnabled: true
@@ -742,7 +758,7 @@ jenkins:
         - name: "Name"
           value: "Beta_UBUNTU22_BLD_1"
         tenancy: Default
-        type: C54xlarge
+        type: C6a4xlarge
         useEphemeralDevices: false
         userData: "#!/bin/bash\nsed -i /etc/hosts -e \"s/^127.0.0.1 localhost$/127.0.0.1\
           \ localhost $(hostname)/\" \necho 'export ENV_3RDPARTY_PATH=/home/lybuilder/ly/workspace/3rdParty'\
@@ -774,6 +790,7 @@ jenkins:
         hostKeyVerificationStrategy: ACCEPT_NEW
         iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
         idleTerminationMinutes: "300"
+        javaPath: "java"
         labelString: "linux-ubuntu-22-arm"
         maxTotalUses: 1
         metadataEndpointEnabled: true

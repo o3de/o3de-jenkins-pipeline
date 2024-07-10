@@ -217,7 +217,7 @@ pipelineJob('Installer/Stop_CloudHSM') {
         pipelineTriggers {
             triggers {
                 cron {
-                    spec('30 12 * * 1-6')
+                    spec('00 10 * * 1-6')
                 }
             }
         }
