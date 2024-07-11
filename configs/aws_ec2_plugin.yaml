@@ -659,7 +659,7 @@ jenkins:
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
-      - ami: "ami-0b0888f13e67db983"
+      - ami: "ami-054445a1a263da554"
         amiType:
           unixData:
             sshPort: "22"
