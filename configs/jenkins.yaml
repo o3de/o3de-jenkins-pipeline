@@ -49,6 +49,8 @@ security:
     - "method groovy.lang.GroovyObject invokeMethod java.lang.String java.lang.Object"
     - "method hudson.model.Actionable getActions"
     - "method hudson.model.PersistenceRoot getRootDir"
+    - "method hudson.model.Run getCause java.lang.Class"
+    - "method hudson.model.Cause$UserIdCause getUserId"
     - "method java.lang.Throwable getStackTrace"
     - "method java.net.URL getHost"
     - "method java.net.URL getPort"

@@ -24,7 +24,7 @@ jenkins:
       - key: "LFS_URL"
         value: "d3df09qsjufr6g.cloudfront.net/api/v1"
       - key: "LY_PACKAGE_SERVER_URLS"
-        value: "s3://o3de-prod-3p-packages;"
+        value: "s3://o3de-prod-3p-packages;s3://o3de-dev-3p-packages"
       - key: "POST_AR_BUILD_SNS_TOPIC"
         value: "arn:aws:sns:us-west-2:${/jenkins/config/accountid}:post-ar-build"
       - key: "SERVICE_USER"
