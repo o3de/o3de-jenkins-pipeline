@@ -2,7 +2,7 @@
 jenkins:
   clouds:
   - amazonEC2:
-      cloudName: "us-west-2"
+      name: "us-west-2"
       instanceCapStr: "100"
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
@@ -325,7 +325,7 @@ jenkins:
         zone: "us-west-2a"
       useInstanceProfileForCredentials: false
   - amazonEC2:
-      cloudName: "Packaging"
+      name: "Packaging"
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
@@ -529,7 +529,7 @@ jenkins:
         zone: "us-west-2a"
       useInstanceProfileForCredentials: false
   - amazonEC2:
-      cloudName: "Windows"
+      name: "Windows"
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
@@ -695,7 +695,7 @@ jenkins:
         zone: "us-west-2a"
       useInstanceProfileForCredentials: false
   - amazonEC2:
-      cloudName: "Linux"
+      name: "Linux"
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
