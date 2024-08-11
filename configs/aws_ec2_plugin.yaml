@@ -653,6 +653,46 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
+      - ami: "ami-0b22973514476c57d"
+        amiType:
+          unixData:
+            sshPort: "22"
+        associatePublicIp: false
+        connectBySSHProcess: false
+        connectionStrategy: PRIVATE_IP
+        deleteRootOnTermination: false
+        description: "WIN2022_INC_2"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
+        idleTerminationMinutes: "30"
+        javaPath: "java"
+        labelString: "windows-2024-07"
+        launchTimeoutStr: "600"
+        maxTotalUses: 1
+        metadataEndpointEnabled: true
+        metadataHopsLimit: 1
+        metadataTokensRequired: true
+        minimumNumberOfInstances: 0
+        minimumNumberOfSpareInstances: 0
+        mode: EXCLUSIVE
+        monitoring: false
+        numExecutors: 1
+        remoteAdmin: "lybuilder"
+        remoteFS: "c:/ly"
+        securityGroups: "sg-0551df0efb1ca5476"
+        stopOnTerminate: false
+        subnetId: "subnet-0c203f0579b4bc4a0"
+        t2Unlimited: false
+        tags:
+        - name: "Name"
+          value: "WIN2022_INC_1"
+        tenancy: Default
+        tmpDir: "c:\\\\ly"
+        type: C6a4xlarge
+        useEphemeralDevices: false
+        zone: "us-west-2a"
       useInstanceProfileForCredentials: false
   - amazonEC2:
       cloudName: "Linux"
