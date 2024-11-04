@@ -27,6 +27,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -71,6 +72,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -111,6 +113,7 @@ jenkins:
         maxTotalUses: -1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -150,6 +153,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -190,6 +194,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -243,6 +248,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -285,6 +291,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -349,6 +356,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -389,6 +397,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -427,7 +436,7 @@ jenkins:
           \ text)\nexec /usr/bin/dpkg-sig-cmd -g \"--pinentry-mode loopback --passphrase\
           \ $pass\" \"$@\"\nEOT\n\nchmod 755 /usr/bin/dpkg-sig"
         zone: "us-west-2a"
-      - ami: "ami-0c3a789b6de3d955f"
+      - ami: "ami-0135d1b0f79a6e9d6"
         amiType:
           unixData:
             sshPort: "22"
@@ -447,6 +456,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -467,7 +477,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-00cd01aeb5a4d5b9d"
+      - ami: "ami-02be6a7155ba45614"
         amiType:
           unixData:
             sshPort: "22"
@@ -487,6 +497,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -553,6 +564,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -593,6 +605,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -613,7 +626,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-0204ce8bc318f3cb9"
+      - ami: "ami-04f2391596e44956e"
         amiType:
           unixData:
             sshPort: "22"
@@ -633,6 +646,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: true
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -653,7 +667,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-0b22973514476c57d"
+      - ami: "ami-04c6cedffd583d719"
         amiType:
           unixData:
             sshPort: "22"
@@ -673,6 +687,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: true
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -699,7 +714,7 @@ jenkins:
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
-      - ami: "ami-054445a1a263da554"
+      - ami: "ami-00bebf8d577e9084e"
         amiType:
           unixData:
             sshPort: "22"
@@ -719,6 +734,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -758,7 +774,7 @@ jenkins:
           \ prefer iburst minpoll 4 maxpoll 4\\n/' /etc/chrony/chrony.conf\n/etc/init.d/chrony\
           \ restart"
         zone: "us-west-2a"
-      - ami: "ami-00cd01aeb5a4d5b9d"
+      - ami: "ami-02be6a7155ba45614"
         amiType:
           unixData:
             sshPort: "22"
@@ -777,6 +793,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: false
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0
@@ -835,6 +852,7 @@ jenkins:
         maxTotalUses: 1
         metadataEndpointEnabled: true
         metadataHopsLimit: 1
+        metadataSupported: true
         metadataTokensRequired: true
         minimumNumberOfInstances: 0
         minimumNumberOfSpareInstances: 0

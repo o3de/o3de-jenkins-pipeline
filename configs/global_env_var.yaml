@@ -23,6 +23,8 @@ jenkins:
         value: "o3de-jenkins-artifacts"
       - key: "LFS_URL"
         value: "d3df09qsjufr6g.cloudfront.net/api/v1"
+      - key: "LY_NDK_DIR"
+        value: "/opt/android-sdk-linux/ndk/25.2.9519653"
       - key: "LY_PACKAGE_SERVER_URLS"
         value: "s3://o3de-prod-3p-packages;s3://o3de-dev-3p-packages"
       - key: "POST_AR_BUILD_SNS_TOPIC"
