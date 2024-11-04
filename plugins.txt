@@ -12,7 +12,7 @@ ec2:1715.vb_9e9e841ca_94
 email-ext:1844.v3ea_a_b_842374a_
 external-monitor-job:215.v2e88e894db_f8
 github-branch-source:1807.v50351eb_7dd13
-github-oauth:621.v33b_4394dda_4d
+github-oauth:611.v70d151e60ec4
 greenballs:1.15.1
 job-dsl:1.89
 mailer:488.v0c9639c1a_eb_3
