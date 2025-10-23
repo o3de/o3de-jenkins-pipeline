@@ -436,7 +436,7 @@ jenkins:
           \ text)\nexec /usr/bin/dpkg-sig-cmd -g \"--pinentry-mode loopback --passphrase\
           \ $pass\" \"$@\"\nEOT\n\nchmod 755 /usr/bin/dpkg-sig"
         zone: "us-west-2a"
-      - ami: "ami-0135d1b0f79a6e9d6"
+      - ami: "ami-01c4cfacb03580e94"
         amiType:
           unixData:
             sshPort: "22"
@@ -477,7 +477,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-02be6a7155ba45614"
+      - ami: "ami-06375cfca3b9b56f8"
         amiType:
           unixData:
             sshPort: "22"
@@ -544,47 +544,6 @@ jenkins:
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
-      - ami: "ami-000a8c3f0d8d4e26b"
-        amiType:
-          unixData:
-            sshPort: "22"
-        associatePublicIp: false
-        connectBySSHProcess: false
-        connectionStrategy: PRIVATE_IP
-        deleteRootOnTermination: false
-        description: "WIN2019_INC_4"
-        ebsEncryptRootVolume: ENCRYPTED
-        ebsOptimized: true
-        hostKeyVerificationStrategy: ACCEPT_NEW
-        iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
-        idleTerminationMinutes: "30"
-        javaPath: "java"
-        labelString: "windows-8fe4037c windows-b3c8994f1 windows-a4a28adb2"
-        launchTimeoutStr: "600"
-        maxTotalUses: 1
-        metadataEndpointEnabled: true
-        metadataHopsLimit: 1
-        metadataSupported: true
-        metadataTokensRequired: false
-        minimumNumberOfInstances: 0
-        minimumNumberOfSpareInstances: 0
-        mode: EXCLUSIVE
-        monitoring: false
-        numExecutors: 1
-        remoteAdmin: "lybuilder"
-        remoteFS: "c:/ly"
-        securityGroups: "sg-0551df0efb1ca5476"
-        stopOnTerminate: false
-        subnetId: "subnet-0c203f0579b4bc4a0"
-        t2Unlimited: false
-        tags:
-        - name: "Name"
-          value: "WIN2019_INC_4"
-        tenancy: Default
-        tmpDir: "$(cygpath -w /cygdrive/c/ly)"
-        type: C6a4xlarge
-        useEphemeralDevices: false
-        zone: "us-west-2a"
       - ami: "ami-098b8388923c3abb9"
         amiType:
           unixData:
@@ -667,7 +626,7 @@ jenkins:
         type: C6a4xlarge
         useEphemeralDevices: false
         zone: "us-west-2a"
-      - ami: "ami-04c6cedffd583d719"
+      - ami: "ami-0f4df7eb200db3fea"
         amiType:
           unixData:
             sshPort: "22"
@@ -714,7 +673,7 @@ jenkins:
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
-      - ami: "ami-00bebf8d577e9084e"
+      - ami: "ami-06375cfca3b9b56f8"
         amiType:
           unixData:
             sshPort: "22"
@@ -722,7 +681,7 @@ jenkins:
         connectBySSHProcess: false
         connectionStrategy: PRIVATE_IP
         deleteRootOnTermination: false
-        description: "UBUNTU20_BLD_3"
+        description: "UBUNTU22_BLD_3"
         ebsEncryptRootVolume: ENCRYPTED
         ebsOptimized: true
         hostKeyVerificationStrategy: ACCEPT_NEW
