@@ -69,15 +69,9 @@ class JenkinsPipeline(Stack):
                 input=self.source,
                 commands=[
                     'cd cdk',
-                    'node -v',
-                    'python --version',
-                    'npm -v',
-                    'python -m venv .venv',
-                    'source .venv/bin/activate',
-                    'python -m pip install --upgrade pip',
+                    'npm install -g aws-cdk',
                     'pip install -r requirements.txt',
-                    'npx -y aws-cdk@2.1031.1 cdk --version',
-                    f'f"npx -y aws-cdk@2.1031.1 cdk synth --verbose \
+                    f'f"cdk synth --verbose \
                         --context codestar-connection={self.codestar_connection} \
                         --context repo={self.repo} \
                         --context branch={self.branch} \
@@ -106,10 +100,9 @@ class JenkinsPipeline(Stack):
             input=self.source,
             commands=[
                 'cd cdk',
-                'python -m venv .venv',
-                'source .venv/bin/activate',
                 'python -m pip install --upgrade pip',
                 'pip install -r requirements.txt',
+                'python -m pytest -v'
             ],
             build_environment=codebuild.BuildEnvironment(
                 build_image=codebuild.LinuxBuildImage.STANDARD_7_0
