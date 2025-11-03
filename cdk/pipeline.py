@@ -69,7 +69,10 @@ class JenkinsPipeline(Stack):
                 input=self.source,
                 commands=[
                     'cd cdk',
-                    'npm install -g aws-cdk',
+                    'npm install -g aws-cdk@2.95.1',
+                    'python -m venv .venv',
+                    'source .venv/bin/activate',
+                    'python -m pip install --upgrade pip',
                     'pip install -r requirements.txt',
                     f'cdk synth --verbose \
                         --context codestar-connection={self.codestar_connection} \
@@ -79,7 +82,7 @@ class JenkinsPipeline(Stack):
                         --context vpc-id={self.vpc_id}'
                 ],
                 build_environment=codebuild.BuildEnvironment(
-                    build_image=codebuild.LinuxBuildImage.STANDARD_5_0
+                    build_image=codebuild.LinuxBuildImage.STANDARD_7_0
                 ),
                 primary_output_directory='cdk/cdk.out',
                 role_policy_statements=[
@@ -100,11 +103,13 @@ class JenkinsPipeline(Stack):
             input=self.source,
             commands=[
                 'cd cdk',
+                'python -m venv .venv',
+                'source .venv/bin/activate',
+                'python -m pip install --upgrade pip',
                 'pip install -r requirements.txt',
-                'python -m pytest -v'
             ],
             build_environment=codebuild.BuildEnvironment(
-                build_image=codebuild.LinuxBuildImage.STANDARD_5_0
+                build_image=codebuild.LinuxBuildImage.STANDARD_7_0
             )
         )
 
