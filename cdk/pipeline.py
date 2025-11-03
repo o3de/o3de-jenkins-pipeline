@@ -65,13 +65,13 @@ class JenkinsPipeline(Stack):
 
     def _create_pipeline(self):
         pipeline = pipelines.CodePipeline(self, 'Pipeline',
-            synth=pipelines.CodeBuildStep('SynthV2',
+            synth=pipelines.CodeBuildStep('Synth',
                 input=self.source,
                 commands=[
                     'cd cdk',
                     'npm install -g aws-cdk',
                     'pip install -r requirements.txt',
-                    f'f"cdk synth --verbose \
+                    f'cdk synth --verbose \
                         --context codestar-connection={self.codestar_connection} \
                         --context repo={self.repo} \
                         --context branch={self.branch} \
@@ -96,7 +96,7 @@ class JenkinsPipeline(Stack):
             )
         )
 
-        cdk_tests = pipelines.CodeBuildStep('CDKTestsV2',
+        cdk_tests = pipelines.CodeBuildStep('CDKTests',
             input=self.source,
             commands=[
                 'cd cdk',
