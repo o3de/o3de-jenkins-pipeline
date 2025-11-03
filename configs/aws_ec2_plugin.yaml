@@ -544,6 +544,47 @@ jenkins:
       region: "us-west-2"
       sshKeysCredentialsId: "lybuilder"
       templates:
+      - ami: "ami-000a8c3f0d8d4e26b"
+        amiType:
+          unixData:
+            sshPort: "22"
+        associatePublicIp: false
+        connectBySSHProcess: false
+        connectionStrategy: PRIVATE_IP
+        deleteRootOnTermination: false
+        description: "WIN2019_INC_4"
+        ebsEncryptRootVolume: ENCRYPTED
+        ebsOptimized: true
+        hostKeyVerificationStrategy: ACCEPT_NEW
+        iamInstanceProfile: "arn:aws:iam::${/jenkins/config/accountid}:instance-profile/jenkins-build-node"
+        idleTerminationMinutes: "30"
+        javaPath: "java"
+        labelString: "windows-8fe4037c windows-b3c8994f1 windows-a4a28adb2"
+        launchTimeoutStr: "600"
+        maxTotalUses: 1
+        metadataEndpointEnabled: true
+        metadataHopsLimit: 1
+        metadataSupported: true
+        metadataTokensRequired: false
+        minimumNumberOfInstances: 0
+        minimumNumberOfSpareInstances: 0
+        mode: EXCLUSIVE
+        monitoring: false
+        numExecutors: 1
+        remoteAdmin: "lybuilder"
+        remoteFS: "c:/ly"
+        securityGroups: "sg-0551df0efb1ca5476"
+        stopOnTerminate: false
+        subnetId: "subnet-0c203f0579b4bc4a0"
+        t2Unlimited: false
+        tags:
+        - name: "Name"
+          value: "WIN2019_INC_4"
+        tenancy: Default
+        tmpDir: "$(cygpath -w /cygdrive/c/ly)"
+        type: C6a4xlarge
+        useEphemeralDevices: false
+        zone: "us-west-2a"
       - ami: "ami-098b8388923c3abb9"
         amiType:
           unixData:
