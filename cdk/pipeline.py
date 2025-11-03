@@ -65,7 +65,7 @@ class JenkinsPipeline(Stack):
 
     def _create_pipeline(self):
         pipeline = pipelines.CodePipeline(self, 'Pipeline',
-            synth=pipelines.CodeBuildStep('Synth',
+            synth=pipelines.CodeBuildStep('SynthV2',
                 input=self.source,
                 commands=[
                     'cd cdk',
@@ -102,7 +102,7 @@ class JenkinsPipeline(Stack):
             )
         )
 
-        cdk_tests = pipelines.CodeBuildStep('CDKTests',
+        cdk_tests = pipelines.CodeBuildStep('CDKTestsV2',
             input=self.source,
             commands=[
                 'cd cdk',
