@@ -1,16 +1,17 @@
-FROM jenkins/jenkins:2.462.3-lts-jdk11
+FROM jenkins/jenkins:2.462.3-lts-jdk11@sha256:9fdcf7b0b628434ed2ea76790f31ce0cc1dd2d8f5503c4c412c08de543d8938c
 
 # Using JENKINS_HOME and REF set on the base image
 ARG uid=1000
 ARG gid=1000
 ARG user=jenkins
 ARG JENKINS_LOCAL=/var/jenkins_local
+ARG AWSCLI_VERSION=2.38.1
 
 ENV JENKINS_LOCAL $JENKINS_LOCAL
 
 USER root
 
-RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip" \
+RUN curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64-${AWSCLI_VERSION}.zip" -o "awscliv2.zip" \
   && unzip awscliv2.zip \
   && ./aws/install
 
